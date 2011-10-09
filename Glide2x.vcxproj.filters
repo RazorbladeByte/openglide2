@@ -1,0 +1,131 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Header">
+      <UniqueIdentifier>{ada67a99-4eb0-43a6-b88b-ccc3e3f8adcf}</UniqueIdentifier>
+      <Extensions>.h</Extensions>
+    </Filter>
+    <Filter Include="Source">
+      <UniqueIdentifier>{f6b5e45a-cb93-4f3c-958f-cd8e3eb5d4d5}</UniqueIdentifier>
+      <Extensions>.c .cpp</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src/FormatConversion.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="src/GLRender.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="src/Glextensions.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="src/OGLTables.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="src/PGTexture.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="src/PGUTexture.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="src/TexDB.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="src/glext.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GlOgl.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="src\wrapper_config.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="src\sst1init.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="win32\win32.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="src\win32.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src/FormatConversion.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="src/GLExtensions.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="src/GLRender.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="src/GLutil.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="src/Glide.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="src/OGLColorAlphaTables.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="src/OGLFogTables.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="src/OGLTextureTables.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="src/PGTexture.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="src/PGUTexture.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="src/TexDB.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="src/grgu3df.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="src/grguBuffer.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="src/grguColorAlpha.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="src/grguDraw.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="src/grguFog.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="src/grguLfb.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="src/grguMisc.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="src/grguSstGlide.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="src/grguTex.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="src\grguDepth.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="src\sst1init.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="src\win32.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="src\library.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Glide2x.rc" />
+  </ItemGroup>
+</Project>

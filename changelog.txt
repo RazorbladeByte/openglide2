@@ -1,0 +1,6 @@
+
+Changes in v0.1:
+
+*code cleanup
+*added grSstOpen
+*proper mmx checks and fallback
