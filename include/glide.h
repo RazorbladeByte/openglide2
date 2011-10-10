@@ -1,7 +1,6 @@
-/*
-  Copyright (c) 1995, 3Dfx Interactive, Inc.
-  All Rights Reserved.
-*/
+
+/* Copyright (c) 1995, 3Dfx Interactive, Inc.
+  All Rights Reserved. */
 
 #ifndef __GLIDE_H__
 #define __GLIDE_H__
