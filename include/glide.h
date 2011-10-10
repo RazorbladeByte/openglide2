@@ -3,31 +3,32 @@
   All Rights Reserved.
 */
 
-/*
-** GLIDE.H
-**
-** The following #defines are relevant when using Glide:
-**
-** One of the following "platform constants" must be defined during
-** compilation:
-**
-**            __DOS__           Defined for 32-bit DOS applications
-**            __WIN32__         Defined for 32-bit Windows applications
-**            __sparc__         Defined for Sun Solaris/SunOS
-**            __linux__         Defined for Linux applications
-**            __IRIX__          Defined for SGI Irix applications
-**
-*/
-
 #ifndef __GLIDE_H__
 #define __GLIDE_H__
 
 #include "3dfx.h"
-#include "glidesys.h"
 #include "sst1vid.h"
 
 #ifdef __cplusplus
 extern "C" {
+#endif
+
+/*
+n** -----------------------------------------------------------------------
+** COMPILER/ENVIRONMENT CONFIGURATION
+** -----------------------------------------------------------------------
+*/
+
+/*
+** Control the number of TMUs
+*/
+#ifndef GLIDE_NUM_TMU
+#  define GLIDE_NUM_TMU 2
+#endif
+
+
+#if ( ( GLIDE_NUM_TMU < 0 ) && ( GLIDE_NUM_TMU > 3 ) )
+#  error "GLIDE_NUM_TMU set to an invalid value"
 #endif
 
 /*
@@ -801,8 +802,8 @@ grFogTable( const GrFog_t ft[] );
 FX_ENTRY void FX_CALL 
 grGammaCorrectionValue( float value );
 
-FX_ENTRY void FX_CALL
-grSplash(float x, float y, float width, float height, FxU32 frame);
+/*FX_ENTRY void FX_CALL
+grSplash(float x, float y, float width, float height, FxU32 frame);*/
 
 /*
 ** texture mapping control functions
