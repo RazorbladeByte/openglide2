@@ -138,7 +138,7 @@ void PGTexture::DownloadMipMap( FxU32 startAddress, FxU32 evenOdd, GrTexInfo *in
     {
         if ( mip_offset <= m_tex_memory_size )
         {
-            OG_memcpy( m_memory + mip_offset - mip_size, info->data, mip_size );
+            memcpy( m_memory + mip_offset - mip_size, info->data, mip_size );
         }
         
         // Any texture based on memory crossing this range
@@ -201,7 +201,7 @@ void PGTexture::DownloadTable( GrTexTable_t type, FxU32 *data, int first, int co
         int         i;
         GuNccTable *ncc = &(m_ncc[ type ]);
 
-        OG_memcpy( ncc, data, sizeof( GuNccTable ) );
+        memcpy( ncc, data, sizeof( GuNccTable ) );
 
         for ( i = 0; i < 4; i++ )
         {
