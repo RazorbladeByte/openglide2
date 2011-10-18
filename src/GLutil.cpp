@@ -425,6 +425,27 @@ int DetectMMX( void )
 {
     FxU32 Result;
 
+    #ifdef __GNUC__
+    #if SIZEOF_INT_P == 4
+        asm ("push %%ebx;"
+             "mov  $1, %%eax;"
+             "CPUID;"
+             "pop  %%ebx;"
+             : "=d" (Result) /* Outputs */
+             : /* No inputs */
+             : "%eax", "%ecx", "cc" /* Clobbers */
+            );
+    #else
+        asm ("push %%rbx;"
+             "mov  $1, %%rax;"
+             "CPUID;"
+             "pop  %%rbx;"
+             : "=d" (Result) /* Outputs */
+             : /* No inputs */
+             : "%rax", "%rcx", "cc" /* Clobbers */
+            );
+    #endif
+    #else
     __asm
     {
         push EAX
@@ -435,6 +456,7 @@ int DetectMMX( void )
         pop EDX
         pop EAX
     }
+    #endif
 
     #ifdef NOMMX
 	    return 0
@@ -449,6 +471,23 @@ void MMXCopyMemory( void *Dst, void *Src, FxU32 NumberOfBytes )
 {
   if(DetectMMX != 0)
   {
+    #ifdef __GNUC__
+    asm ("jmp   MMXCopyMemory_start;"
+         "MMXCopyMemory_copying:"
+         "movq  (%1,%0), %%mm0;"
+         "movq  %%mm0, (%2,%0);"
+         "MMXCopyMemory_start:"
+    #if SIZEOF_INT_P == 4
+         "subl  $8, %0;"
+    #else
+         "subq  $8, %0;"
+    #endif
+         "jae   MMXCopyMemory_copying;"
+         : /* No outputs */
+         : "r" ((FxU)NumberOfBytes), "r" (Src), "r" (Dst) /* Inputs */
+         : "%mm0", "memory" /* Clobbers */
+        );
+    #else
     __asm
     {
         mov ECX, NumberOfBytes
@@ -462,6 +501,7 @@ start:  sub ECX, 8
         jae copying
         EMMS
     }
+    #endif
   }
   else
   {
