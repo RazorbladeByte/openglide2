@@ -43,7 +43,11 @@ typedef struct { float r, g, b, a; } FxColor4;
 
 #define FXUNUSED( a ) ((void)(a))
 #define FXBIT( i )    ( 1L << (i) )
+#ifdef __GNUC__
+#define VARARGDECL(t) extern "C" t
+#else
 #define VARARGDECL(t) t __cdecl
+#endif
 
 /* export macros */
 #ifdef __GNUC__
