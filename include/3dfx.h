@@ -47,9 +47,9 @@ typedef struct { float r, g, b, a; } FxColor4;
 
 /* export macros */
 #ifdef __GNUC__
-  #define DLL_PUBLIC __declspec(dllexport)
+#define DLLEXPORT __attribute__((dllexport))
 #else
-  #define DLLEXPORT __declspec(dllexport)
+#define DLLEXPORT __declspec(dllexport)
 #endif
 #define FX_ENTRY DLLEXPORT
 #define FX_CALL __stdcall

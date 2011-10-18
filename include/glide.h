@@ -682,6 +682,9 @@ grSstWinClose( void );
 FX_ENTRY FxBool FX_CALL
 grSstControl( FxU32 code );
 
+FX_ENTRY FxBool FX_CALL
+grSstControlMode( GrControl_t mode );
+
 FX_ENTRY FxBool FX_CALL 
 grSstQueryHardware( GrHwConfiguration *hwconfig );
 
@@ -923,10 +926,16 @@ ConvertAndDownloadRle( GrChipID_t        tmu,
                         FxU32             height,
                         FxU32             dest_width,
                         FxU32             dest_height,
-                        FxU16             *tlut);
+                        FxU16             *tlut );
 
 FX_ENTRY void FX_CALL 
 grCheckForRoom(FxI32 n);
+
+FX_ENTRY void FX_CALL
+grParameterData( FxU32 param, 
+                 FxU32 components, 
+				 FxU32 type, 
+				 FxI32 offset );
 
 
 FX_ENTRY void FX_CALL
@@ -1110,6 +1119,21 @@ grGlideShamelessPlug(const FxBool on);
 
 FX_ENTRY void FX_CALL
 grHints(GrHint_t hintType, FxU32 hintMask);
+
+/*
+** Misc
+*/
+FX_ENTRY FxU16 FX_CALL
+guEndianSwapBytes( FxU16 value );
+
+FX_ENTRY void FX_CALL
+guMovieStart( void );
+
+FX_ENTRY void FX_CALL
+guMovieStop( void );
+
+FX_ENTRY void FX_CALL
+guMovieSetName( const char *name );
 
 #endif /* FX_GLIDE_NO_FUNC_PROTO */
 
