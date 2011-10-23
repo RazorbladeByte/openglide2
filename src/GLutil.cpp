@@ -426,7 +426,6 @@ int DetectMMX( void )
     FxU32 Result;
 
     #ifdef __GNUC__
-    #if SIZEOF_INT_P == 4
         asm ("push %%ebx;"
              "mov  $1, %%eax;"
              "CPUID;"
@@ -435,16 +434,6 @@ int DetectMMX( void )
              : /* No inputs */
              : "%eax", "%ecx", "cc" /* Clobbers */
             );
-    #else
-        asm ("push %%rbx;"
-             "mov  $1, %%rax;"
-             "CPUID;"
-             "pop  %%rbx;"
-             : "=d" (Result) /* Outputs */
-             : /* No inputs */
-             : "%rax", "%rcx", "cc" /* Clobbers */
-            );
-    #endif
     #else
     __asm
     {
