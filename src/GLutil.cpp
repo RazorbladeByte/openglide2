@@ -466,11 +466,7 @@ void MMXCopyMemory( void *Dst, void *Src, FxU32 NumberOfBytes )
          "movq  (%1,%0), %%mm0;"
          "movq  %%mm0, (%2,%0);"
          "MMXCopyMemory_start:"
-    #if SIZEOF_INT_P == 4
          "subl  $8, %0;"
-    #else
-         "subq  $8, %0;"
-    #endif
          "jae   MMXCopyMemory_copying;"
          : /* No outputs */
          : "r" ((FxU)NumberOfBytes), "r" (Src), "r" (Dst) /* Inputs */
