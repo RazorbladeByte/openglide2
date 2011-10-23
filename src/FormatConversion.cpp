@@ -59,8 +59,8 @@ void MMX565to5551( FxU32 *Src, FxU32 *Dst, int NumberOfPixels )
     FxU64 Mask565_5551_3 = 0x0001000100010001;
 
 		#ifdef __GNUC__
-    asm ("shl" OP " $1, %0;"
-         "sub" OP " $8, %0;"
+    asm ("shl   $1, %0;"
+         "sub   $8, %0;"
          "movq  %5, %%mm6;"
          "movq  %4, %%mm5;"
          "movq  %3, %%mm4;"
@@ -75,7 +75,7 @@ void MMX565to5551( FxU32 *Src, FxU32 *Dst, int NumberOfPixels )
          "por   %%mm2, %%mm1;"
          "por   %%mm1, %%mm0;"
          "movq  %%mm0, (%2,%0);"
-         "sub" OP " $8, %0;"
+         "sub   $8, %0;"
          "jge   MMXConvert565to5551_copying;"
          "EMMS;"
          : /* No outputs */
@@ -151,8 +151,8 @@ void MMX5551to565( FxU32 *Src, FxU32 *Dst, int NumberOfPixels )
     FxU64 Mask5551_565_2 = 0x003E003E003E003E;
 
     #ifdef __GNUC__
-    asm ("shl" OP " $1, %0;"
-         "sub" OP " $8, %0;"
+    asm ("shl   $1, %0;"
+         "sub   $8, %0;"
          "movq  %4, %%mm5;"
          "movq  %3, %%mm4;"
          ".align 16;"
@@ -164,7 +164,7 @@ void MMX5551to565( FxU32 *Src, FxU32 *Dst, int NumberOfPixels )
          "psllq $1, %%mm0;"
          "por   %%mm2, %%mm0;"
          "movq  %%mm0, (%2,%0);"
-         "sub" OP " $8, %0;"
+         "sub   $8, %0;"
          "jge   MMXConvert5551to565_copying;"
          "EMMS;"
          : /* No outputs */
@@ -236,8 +236,8 @@ void MMX4444to4444special( FxU32 *Src, FxU32 *Dst, int NumberOfPixels )
     FxU64 Mask4444_2 = 0xF000F000F000F000;
 
     #ifdef __GNUC__
-    asm ("shl" OP " $1, %0;"
-         "sub" OP " $8, %0;"
+    asm ("shl   $1, %0;"
+         "sub   $8, %0;"
          "movq  %4, %%mm7;"
          "movq  %3, %%mm6;"
          ".align 16;"
@@ -250,7 +250,7 @@ void MMX4444to4444special( FxU32 *Src, FxU32 *Dst, int NumberOfPixels )
          "psllq $12, %%mm1;"
          "por   %%mm1, %%mm0;"
          "movq  %%mm0, (%2,%0);"
-         "sub" OP " $8, %0;"
+         "sub   $8, %0;"
          "jge   MMXConvert4444to4444special_copying;"
          "EMMS;"
          : /* No outputs */
@@ -323,8 +323,8 @@ void MMX1555to5551( FxU32 *Src, FxU32 *Dst, int NumberOfPixels )
     FxU64 Mask5551_2 = 0x8000800080008000;
 
     #ifdef __GNUC__
-    asm ("shl" OP " $1, %0;"
-         "sub" OP " $8, %0;"
+    asm ("shl   $1, %0;"
+         "sub   $8, %0;"
          "movq  %4, %%mm7;"
          "movq  %3, %%mm6;"
          ".align 16;"
@@ -337,7 +337,7 @@ void MMX1555to5551( FxU32 *Src, FxU32 *Dst, int NumberOfPixels )
          "psllq $15, %%mm1;"
          "por   %%mm1, %%mm0;"
          "movq  %%mm0, (%2,%0);"
-         "sub" OP " $8, %0;"
+         "sub   $8, %0;"
          "jge   MMXConvert1555to5551_copying;"
          "EMMS;"
          : /* No outputs */
@@ -414,7 +414,7 @@ void MMX565to8888( FxU16 *Src, FxU32 *Dst, FxU32 NumberOfPixels )
          ".align 16;"
          "MMXConvert565to8888_copying:"
          "movq  (%1), %%mm0;"
-         "add" OP " $8, %1;"
+         "add   $8, %1;"
          "movq  %%mm0, %%mm2;"
          "movq  %%mm0, %%mm1;"
          "pand  %%mm4, %%mm0;" /* Mask R */
@@ -435,9 +435,9 @@ void MMX565to8888( FxU16 *Src, FxU32 *Dst, FxU32 NumberOfPixels )
          "punpckhbw %%mm1, %%mm2;"
 
          "movq  %%mm2, (%2);"  /* Storing Unpacked */
-         "add" OP " $16, %2;"
+         "add   $16, %2;"
          "movq  %%mm0, -8(%2);"
-         "sub" OP " $4, %0;"
+         "sub   $4, %0;"
          "jg    MMXConvert565to8888_copying;"
          "EMMS;"
          : /* No outputs */
