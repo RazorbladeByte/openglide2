@@ -11,4 +11,4 @@
 
 
 FX_ENTRY unsigned int* FX_CALL sst1InitMapBoard(unsigned int BoardNumber);
-FX_ENTRY int FX_CALL sst1InitGamma(unsigned int *sstbase, double gamma);
+FX_ENTRY FxBool FX_CALL sst1InitGamma(unsigned int *sstbase, double gamma);
