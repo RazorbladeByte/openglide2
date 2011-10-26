@@ -15,23 +15,24 @@ public:
 
     struct Record
     {
-        FxU32 startAddress;
-        FxU32 endAddress;
-        GrTexInfo info;
-        FxU32 hash;
-        GLuint texNum;
-        GLuint tex2Num;
-        Record *next;
+        unsigned int startAddress;
+        unsigned int endAddress;
+        GrTexInfo    info;
+        unsigned int hash;
+        GLuint       texNum;
+        GLuint       tex2Num;
+        Record       *next;
 
         Record( bool two_tex );
         ~Record( void );
-        bool Match( FxU32 stt, GrTexInfo *inf, FxU32 h );
+        bool Match( unsigned int stt, GrTexInfo *inf, unsigned int h );
     };
 
-    void Add( FxU32 startAddress, FxU32 endAddress, GrTexInfo *info, FxU32 hash, GLuint *pTexNum, GLuint *pTex2Num );
-    void WipeRange( FxU32 startAddress, FxU32 endAddress, FxU32 hash );
-    GrTexInfo * Find( FxU32 startAddress, GrTexInfo *info, FxU32 hash, 
-               GLuint *pTexNum, GLuint *pTex2Num, bool *pal_change );
+    void Add( unsigned int startAddress, unsigned int endAddress, GrTexInfo *info, 
+		      unsigned int hash, GLuint *pTexNum, GLuint *pTex2Num );
+    void WipeRange( unsigned int startAddress, unsigned int endAddress, unsigned int hash );
+    GrTexInfo * Find( unsigned int startAddress, GrTexInfo *info, unsigned int hash, 
+                      GLuint *pTexNum, GLuint *pTex2Num, bool *pal_change );
     TexDB( unsigned int MemorySize );
     virtual ~TexDB( void );
 

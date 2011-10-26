@@ -11,23 +11,7 @@
 
 /* basic data types */
 
-typedef unsigned int       FxU;
-typedef int                FxI;
-typedef unsigned char      FxU8;
-typedef signed   char      FxI8;
-typedef unsigned short     FxU16;
-typedef signed   short     FxI16;
-typedef signed   int       FxI32;
-typedef unsigned int       FxU32;
-typedef long long          FxI64;
-typedef unsigned long long FxU64;
-typedef int                FxBool;
-typedef float              FxFloat;
-typedef double             FxDouble;
-typedef FxU32              FxU;
-typedef FxI32              FxI;
-
-
+typedef int FxBool;
 
 /* color types */
 

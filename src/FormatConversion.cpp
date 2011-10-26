@@ -9,7 +9,7 @@
 
 ////////////////////////////////////////////////////////////////////////
 
-void Convert565Kto8888( FxU16 *Buffer1, FxU16 key, FxU32 *Buffer2, FxU32 Pixels )
+void Convert565Kto8888( unsigned short *Buffer1, unsigned short key, unsigned int *Buffer2, unsigned int Pixels )
 {
     while ( Pixels )
     {
@@ -23,20 +23,20 @@ void Convert565Kto8888( FxU16 *Buffer1, FxU16 key, FxU32 *Buffer2, FxU32 Pixels 
 
 ////////////////////////////////////////////////////////////////////////
 
-void Convert8888to565(FxU32 *Src, FxU16 *Dst, FxU32 Pixels )
+void Convert8888to565(unsigned int *Src, unsigned short *Dst, unsigned int Pixels )
 {
     while ( Pixels-- )
     {
-        *Dst++ = ( FxU16 ) ( ( *Src & 0x00F80000 ) >> 8 |
-                ( *Src & 0x0000FC00 ) >> 5 |
-                ( *Src & 0x000000F8 ) >> 3 );
+        *Dst++ = ( unsigned short ) ( ( *Src & 0x00F80000 ) >> 8 |
+                 ( *Src & 0x0000FC00 ) >> 5 |
+                 ( *Src & 0x000000F8 ) >> 3 );
         Src++;
     }
 }
 
 ////////////////////////////////////////////////////////////////////////
 
-void Convert565to5551( FxU32 *Buffer1, FxU32 *Buffer2, int Pixels )
+void Convert565to5551( unsigned int *Buffer1, unsigned int *Buffer2, int Pixels )
 {
 	if(DetectMMX != 0)
 	{
@@ -51,12 +51,12 @@ void Convert565to5551( FxU32 *Buffer1, FxU32 *Buffer2, int Pixels )
 // This functions processes 4 pixels at a time, there is no problem in
 // passing odd numbers or a number less than 4 for the pixels, but
 // the buffers should be large enough
-void MMX565to5551( FxU32 *Src, FxU32 *Dst, int NumberOfPixels )
+void MMX565to5551( unsigned int *Src, unsigned int *Dst, int NumberOfPixels )
 {
 
-	FxU64 Mask565_5551_1 = 0xFFC0FFC0FFC0FFC0;
-    FxU64 Mask565_5551_2 = 0x001F001F001F001F;
-    FxU64 Mask565_5551_3 = 0x0001000100010001;
+	unsigned long long Mask565_5551_1 = 0xFFC0FFC0FFC0FFC0;
+    unsigned long long Mask565_5551_2 = 0x001F001F001F001F;
+    unsigned long long Mask565_5551_3 = 0x0001000100010001;
 
 		#ifdef __GNUC__
     asm ("shl   $1, %0;"
@@ -79,7 +79,7 @@ void MMX565to5551( FxU32 *Src, FxU32 *Dst, int NumberOfPixels )
          "jge   MMXConvert565to5551_copying;"
          "EMMS;"
          : /* No outputs */
-         : "r" ((FxU)NumberOfPixels), "r" (Src), "r" (Dst), /*Inputs */
+         : "r" ((unsigned int)NumberOfPixels), "r" (Src), "r" (Dst), /*Inputs */
            "m" (Mask565_5551_1), "m" (Mask565_5551_2), "m" (Mask565_5551_3)
          : "%mm0", "%mm1", "%mm2", "%mm4", "%mm5", "%mm6", "memory" /* Clobbers */
         );
@@ -117,7 +117,7 @@ copying:
 // This functions processes 2 pixels at a time, there is no problem in
 // passing odd numbers or a number less than 2 for the pixels, but
 // the buffers should be large enough
-void Cpp565to5551( FxU32 *Buffer1, FxU32 *Buffer2, int Pixels )
+void Cpp565to5551( unsigned int *Buffer1, unsigned int *Buffer2, int Pixels )
 {
    while ( Pixels > 0 )
    {
@@ -130,7 +130,7 @@ void Cpp565to5551( FxU32 *Buffer1, FxU32 *Buffer2, int Pixels )
 
 ////////////////////////////////////////////////////////////////////////
 
-void Convert5551to565( FxU32 *Buffer1, FxU32 *Buffer2, int Pixels )
+void Convert5551to565( unsigned int *Buffer1, unsigned int *Buffer2, int Pixels )
 {
 	if(DetectMMX != 0)
 	{
@@ -145,10 +145,10 @@ void Convert5551to565( FxU32 *Buffer1, FxU32 *Buffer2, int Pixels )
 // This functions processes 4 pixels at a time, there is no problem in
 // passing odd numbers or a number less than 4 for the pixels, but
 // the buffers should be large enough
-void MMX5551to565( FxU32 *Src, FxU32 *Dst, int NumberOfPixels )
+void MMX5551to565( unsigned int *Src, unsigned int *Dst, int NumberOfPixels )
 {
-	FxU64 Mask5551_565_1 = 0xFFC0FFC0FFC0FFC0;
-    FxU64 Mask5551_565_2 = 0x003E003E003E003E;
+	unsigned long long Mask5551_565_1 = 0xFFC0FFC0FFC0FFC0;
+    unsigned long long Mask5551_565_2 = 0x003E003E003E003E;
 
     #ifdef __GNUC__
     asm ("shl   $1, %0;"
@@ -168,7 +168,7 @@ void MMX5551to565( FxU32 *Src, FxU32 *Dst, int NumberOfPixels )
          "jge   MMXConvert5551to565_copying;"
          "EMMS;"
          : /* No outputs */
-         : "r" ((FxU)NumberOfPixels), "r" (Src), "r" (Dst), /*Inputs */
+         : "r" ((unsigned int)NumberOfPixels), "r" (Src), "r" (Dst), /*Inputs */
            "m" (Mask5551_565_1), "m" (Mask5551_565_2)
          : "%mm0", "%mm2", "%mm4", "%mm5", "memory" /* Clobbers */
         );
@@ -203,7 +203,7 @@ copying:
 // This functions processes 2 pixels at a time, there is no problem in
 // passing odd numbers or a number less than 2 for the pixels, but
 // the buffers should be large enough
-void Cpp5551to565( FxU32 *Buffer1, FxU32 *Buffer2, int Pixels )
+void Cpp5551to565( unsigned int *Buffer1, unsigned int *Buffer2, int Pixels )
 {
    while ( Pixels > 0 )
    {
@@ -215,7 +215,7 @@ void Cpp5551to565( FxU32 *Buffer1, FxU32 *Buffer2, int Pixels )
 
 ////////////////////////////////////////////////////////////////////////
 
-void Convert4444to4444special( FxU32 *Buffer1, FxU32 *Buffer2, int Pixels )
+void Convert4444to4444special( unsigned int *Buffer1, unsigned int *Buffer2, int Pixels )
 {
 	if(DetectMMX != 0)
 	{
@@ -230,10 +230,10 @@ void Convert4444to4444special( FxU32 *Buffer1, FxU32 *Buffer2, int Pixels )
 // This functions processes 4 pixels at a time, there is no problem in
 // passing odd numbers or a number less than 4 for the pixels, but
 // the buffers should be large enough
-void MMX4444to4444special( FxU32 *Src, FxU32 *Dst, int NumberOfPixels )
+void MMX4444to4444special( unsigned int *Src, unsigned int *Dst, int NumberOfPixels )
 {
-	FxU64 Mask4444_1 = 0x0FFF0FFF0FFF0FFF;
-    FxU64 Mask4444_2 = 0xF000F000F000F000;
+	unsigned long long Mask4444_1 = 0x0FFF0FFF0FFF0FFF;
+    unsigned long long Mask4444_2 = 0xF000F000F000F000;
 
     #ifdef __GNUC__
     asm ("shl   $1, %0;"
@@ -254,7 +254,7 @@ void MMX4444to4444special( FxU32 *Src, FxU32 *Dst, int NumberOfPixels )
          "jge   MMXConvert4444to4444special_copying;"
          "EMMS;"
          : /* No outputs */
-         : "r" ((FxU)NumberOfPixels), "r" (Src), "r" (Dst), /*Inputs */
+         : "r" ((unsigned int)NumberOfPixels), "r" (Src), "r" (Dst), /*Inputs */
            "m" (Mask4444_1), "m" (Mask4444_2)
          : "%mm0", "%mm1", "%mm6", "%mm7", "memory" /* Clobbers */
         );
@@ -290,7 +290,7 @@ copying:
 // This functions processes 2 pixels at a time, there is no problem in
 // passing odd numbers or a number less than 2 for the pixels, but
 // the buffers should be large enough
-void Cpp4444to4444special( FxU32 *Buffer1, FxU32 *Buffer2, int Pixels )
+void Cpp4444to4444special( unsigned int *Buffer1, unsigned int *Buffer2, int Pixels )
 {
    while ( Pixels > 0 )
    {
@@ -302,7 +302,7 @@ void Cpp4444to4444special( FxU32 *Buffer1, FxU32 *Buffer2, int Pixels )
 
 ////////////////////////////////////////////////////////////////////////
 
-void Convert1555to5551( FxU32 *Buffer1, FxU32 *Buffer2, int Pixels )
+void Convert1555to5551( unsigned int *Buffer1, unsigned int *Buffer2, int Pixels )
 {
 	if(DetectMMX != 0)
 	{
@@ -317,10 +317,10 @@ void Convert1555to5551( FxU32 *Buffer1, FxU32 *Buffer2, int Pixels )
 // This functions processes 4 pixels at a time, there is no problem in
 // passing odd numbers or a number less than 4 for the pixels, but
 // the buffers should be large enough
-void MMX1555to5551( FxU32 *Src, FxU32 *Dst, int NumberOfPixels )
+void MMX1555to5551( unsigned int *Src, unsigned int *Dst, int NumberOfPixels )
 {
-	FxU64 Mask5551_1 = 0x7FFF7FFF7FFF7FFF;
-    FxU64 Mask5551_2 = 0x8000800080008000;
+	unsigned long long Mask5551_1 = 0x7FFF7FFF7FFF7FFF;
+    unsigned long long Mask5551_2 = 0x8000800080008000;
 
     #ifdef __GNUC__
     asm ("shl   $1, %0;"
@@ -341,7 +341,7 @@ void MMX1555to5551( FxU32 *Src, FxU32 *Dst, int NumberOfPixels )
          "jge   MMXConvert1555to5551_copying;"
          "EMMS;"
          : /* No outputs */
-         : "r" ((FxU)NumberOfPixels), "r" (Src), "r" (Dst), /*Inputs */
+         : "r" ((unsigned int)NumberOfPixels), "r" (Src), "r" (Dst), /*Inputs */
            "m" (Mask5551_1), "m" (Mask5551_2)
          : "%mm0", "%mm1", "%mm6", "%mm7", "memory" /* Clobbers */
         );
@@ -375,7 +375,7 @@ copying:
 }
 
 
-void Cpp1555to5551( FxU32 *Buffer1, FxU32 *Buffer2, int Pixels )
+void Cpp1555to5551( unsigned int *Buffer1, unsigned int *Buffer2, int Pixels )
 {
    while ( Pixels > 0 )
    {
@@ -387,7 +387,7 @@ void Cpp1555to5551( FxU32 *Buffer1, FxU32 *Buffer2, int Pixels )
 
 ////////////////////////////////////////////////////////////////////////
 
-void Convert565to8888( FxU16 *Buffer1, FxU32 *Buffer2, FxU32 Pixels )
+void Convert565to8888( unsigned short *Buffer1, unsigned int *Buffer2, unsigned int Pixels )
 {
 	if(DetectMMX != 0)
 	{
@@ -399,12 +399,12 @@ void Convert565to8888( FxU16 *Buffer1, FxU32 *Buffer2, FxU32 Pixels )
 	}	
 }
 
-void MMX565to8888( FxU16 *Src, FxU32 *Dst, FxU32 NumberOfPixels )
+void MMX565to8888( unsigned short *Src, unsigned int *Dst, unsigned int NumberOfPixels )
 {
-	FxU64 Mask565A = 0xFF00FF00FF00FF00;
-    FxU64 Mask565B = 0xF800F800F800F800;
-    FxU64 Mask565G = 0x07E007E007E007E0;
-    FxU64 Mask565R = 0x001F001F001F001F;
+	unsigned long long Mask565A = 0xFF00FF00FF00FF00;
+    unsigned long long Mask565B = 0xF800F800F800F800;
+    unsigned long long Mask565G = 0x07E007E007E007E0;
+    unsigned long long Mask565R = 0x001F001F001F001F;
 
     #ifdef __GNUC__
     asm ("movq  %3, %%mm7;"
@@ -441,7 +441,7 @@ void MMX565to8888( FxU16 *Src, FxU32 *Dst, FxU32 NumberOfPixels )
          "jg    MMXConvert565to8888_copying;"
          "EMMS;"
          : /* No outputs */
-         : "r" ((FxU)NumberOfPixels), "r" (Src), "r" (Dst), /*Inputs */
+         : "r" ((unsigned int)NumberOfPixels), "r" (Src), "r" (Dst), /*Inputs */
            "m" (Mask565A), "m" (Mask565B), "m" (Mask565G), "m" (Mask565R)
          : "%mm0", "%mm1", "%mm2", "%mm3", "%mm4", "%mm5",
            "%mm6", "%mm7", "memory" /* Clobbers */
@@ -494,7 +494,7 @@ copying:
    #endif
 }
 
-void Cpp565to8888( FxU16 *Buffer1, FxU32 *Buffer2, FxU32 Pixels )
+void Cpp565to8888( unsigned short *Buffer1, unsigned int *Buffer2, unsigned int Pixels )
 {
    while ( Pixels )
    {
@@ -508,7 +508,7 @@ void Cpp565to8888( FxU16 *Buffer1, FxU32 *Buffer2, FxU32 Pixels )
 
 ////////////////////////////////////////////////////////////////////////
 
-void ConvertA8toAP88( FxU8 *Buffer1, FxU16 *Buffer2, FxU32 Pixels )
+void ConvertA8toAP88( unsigned char *Buffer1, unsigned short *Buffer2, unsigned int Pixels )
 {
     while ( Pixels )
     {
@@ -523,13 +523,13 @@ void ConvertA8toAP88( FxU8 *Buffer1, FxU16 *Buffer2, FxU32 Pixels )
     }
 }
 
-void Convert8332to8888( FxU16 *Buffer1, FxU32 *Buffer2, FxU32 Pixels )
+void Convert8332to8888( unsigned short *Buffer1, unsigned int *Buffer2, unsigned int Pixels )
 {
-    static FxU32    R, 
-                    G, 
-                    B, 
-                    A;
-    for ( FxU32 i = Pixels; i > 0; i-- )
+    static unsigned int R, 
+                        G, 
+                        B, 
+                        A;
+    for ( unsigned int i = Pixels; i > 0; i-- )
     {
         A = ( ( ( *Buffer1 ) >> 8 ) & 0xFF );
         R = ( ( ( *Buffer1 ) >> 5 ) & 0x07 ) << 5;
@@ -541,7 +541,8 @@ void Convert8332to8888( FxU16 *Buffer1, FxU32 *Buffer2, FxU32 Pixels )
     }
 }
 
-void ConvertP8to8888( FxU8 *Buffer1, FxU32 *Buffer2, FxU32 Pixels, FxU32 *palette )
+void ConvertP8to8888( unsigned char *Buffer1, unsigned int *Buffer2, unsigned int Pixels, 
+	                  unsigned int *palette )
 {
     while ( Pixels-- )
     {
@@ -549,9 +550,9 @@ void ConvertP8to8888( FxU8 *Buffer1, FxU32 *Buffer2, FxU32 Pixels, FxU32 *palett
     }
 }
 
-void ConvertAI44toAP88( FxU8 *Buffer1, FxU16 *Buffer2, FxU32 Pixels )
+void ConvertAI44toAP88( unsigned char *Buffer1, unsigned short *Buffer2, unsigned int Pixels )
 {
-    for ( FxU32 i = Pixels; i > 0; i-- )
+    for ( unsigned int i = Pixels; i > 0; i-- )
     {
         *Buffer2 = ( ( ( ( *Buffer1 ) & 0xF0 ) << 8 ) | ( ( ( *Buffer1 ) & 0x0F ) << 4 ) );
         Buffer2++;
@@ -559,11 +560,11 @@ void ConvertAI44toAP88( FxU8 *Buffer1, FxU16 *Buffer2, FxU32 Pixels )
     }
 }
 
-void ConvertAP88to8888( FxU16 *Buffer1, FxU32 *Buffer2, FxU32 Pixels, FxU32 *palette )
+void ConvertAP88to8888( unsigned short *Buffer1, unsigned int *Buffer2, unsigned int Pixels, unsigned int *palette )
 {
-    FxU32   RGB, 
+    unsigned int   RGB, 
             A;
-    for ( FxU32 i = Pixels; i > 0; i-- )
+    for ( unsigned int i = Pixels; i > 0; i-- )
     {
         RGB = ( palette[ *Buffer1 & 0x00FF ] & 0x00FFFFFF );
         A = *Buffer1 >> 8;
@@ -573,13 +574,13 @@ void ConvertAP88to8888( FxU16 *Buffer1, FxU32 *Buffer2, FxU32 Pixels, FxU32 *pal
     }
 }
 
-void ConvertYIQto8888( FxU8 *in, FxU32 *out, FxU32 Pixels, GuNccTable *ncc )
+void ConvertYIQto8888( unsigned char *in, unsigned int *out, unsigned int Pixels, GuNccTable *ncc )
 {
-    FxU32  R;
-    FxU32  G;
-    FxU32  B;
+    unsigned int  R;
+    unsigned int  G;
+    unsigned int  B;
 
-    for ( FxU32 i = Pixels; i > 0; i-- )
+    for ( unsigned int i = Pixels; i > 0; i-- )
     {
         R = ncc->yRGB[ *in >> 4 ] + ncc->iRGB[ ( *in >> 2 ) & 0x3 ][ 0 ]
                                   + ncc->qRGB[ ( *in      ) & 0x3 ][ 0 ];
@@ -601,13 +602,13 @@ void ConvertYIQto8888( FxU8 *in, FxU32 *out, FxU32 Pixels, GuNccTable *ncc )
     }
 }
 
-void ConvertAYIQto8888( FxU16 *in, FxU32 *out, FxU32 Pixels, GuNccTable *ncc)
+void ConvertAYIQto8888( unsigned short *in, unsigned int *out, unsigned int Pixels, GuNccTable *ncc)
 {
-    FxU32  R;
-    FxU32  G;
-    FxU32  B;
+    unsigned int  R;
+    unsigned int  G;
+    unsigned int  B;
 
-    for ( FxU32 i = Pixels; i > 0; i-- )
+    for ( unsigned int i = Pixels; i > 0; i-- )
     {
         R = ncc->yRGB[ ( *in >> 4 ) & 0xf ] + ncc->iRGB[ ( *in >> 2 ) & 0x3 ][ 0 ]
                                             + ncc->qRGB[ ( *in      ) & 0x3 ][ 0 ];
@@ -629,9 +630,9 @@ void ConvertAYIQto8888( FxU16 *in, FxU32 *out, FxU32 Pixels, GuNccTable *ncc)
     }
 }
 
-void SplitAP88( FxU16 *ap88, FxU8 *index, FxU8 *alpha, FxU32 pixels )
+void SplitAP88( unsigned short *ap88, unsigned char *index, unsigned char *alpha, unsigned int pixels )
 {
-    for ( FxU32 i = pixels; i > 0; i-- )
+    for ( unsigned int i = pixels; i > 0; i-- )
     {
         *alpha++ = ( *ap88 >> 8 );
         *index++ = ( *ap88++ & 0xff );

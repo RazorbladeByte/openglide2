@@ -10,5 +10,5 @@
 #include "win32.h"
 
 
-FX_ENTRY FxU32* FX_CALL sst1InitMapBoard(FxU32 BoardNumber);
-FX_ENTRY FxBool FX_CALL sst1InitGamma(FxU32 *sstbase, FxDouble gamma);
+FX_ENTRY unsigned int* FX_CALL sst1InitMapBoard(unsigned int BoardNumber);
+FX_ENTRY int FX_CALL sst1InitGamma(unsigned int *sstbase, double gamma);

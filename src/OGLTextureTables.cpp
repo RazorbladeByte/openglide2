@@ -55,7 +55,7 @@ OGLTexInfo texInfo[ 7 ][ 9 ] =
     }
 };
 
-FxU32 nSquareLod[ 2 ][ 7 ][ 9 ] =
+unsigned int nSquareLod[ 2 ][ 7 ][ 9 ] =
 {
     {
         {   8192,  2048,  512,  128,  32,   8,  2, 1, 1 },
@@ -79,7 +79,7 @@ FxU32 nSquareLod[ 2 ][ 7 ][ 9 ] =
 
 // Necessary memory for textures
 // Big table to minimize calculation
-FxU32 nSquareTexLod[ 2 ][ 7 ][ 9 ][ 9 ] = // Tex type, aspect, largelod, smalllod
+unsigned int nSquareTexLod[ 2 ][ 7 ][ 9 ][ 9 ] = // Tex type, aspect, largelod, smalllod
 {
     { // Dual byte Textures
         { // GR_ASPECT_8x1

@@ -65,12 +65,9 @@ FX_ENTRY void FX_CALL
 guColorCombineFunction( GrColorCombineFnc_t fnc );
 
 FX_ENTRY int FX_CALL
-guEncodeRLE16( void *dst, 
-               void *src, 
-               FxU32 width, 
-               FxU32 height );
+guEncodeRLE16( void *dst, void *src, unsigned int width, unsigned int height );
 
-FX_ENTRY FxU16 * FX_CALL
+FX_ENTRY unsigned short * FX_CALL
 guTexCreateColorMipMap( void );
 
 /*
@@ -93,11 +90,11 @@ guFogGenerateLinear(GrFog_t fogtable[],
 ** endian stuff
 */
 
-FX_ENTRY FxU32 FX_CALL
-guEndianSwapWords( FxU32 value );
+FX_ENTRY unsigned int FX_CALL
+guEndianSwapWords( unsigned int value );
 
-FX_ENTRY FxU16 FX_CALL
-guEndianSwapBytes( FxU16 value );
+FX_ENTRY unsigned short FX_CALL
+guEndianSwapBytes( unsigned short value );
 
 
 /*

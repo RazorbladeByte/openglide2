@@ -15,7 +15,7 @@
 #define BLUE_SCREEN     (0x07FF)
 
 // Will need to change this later
-static FxU32 tempBuf[ 2048 * 2048 ];
+static unsigned int tempBuf[ 2048 * 2048 ];
 
 
 //*************************************************
@@ -45,7 +45,7 @@ grLfbLock( GrLock_t dwType,
     }
     else
     {
-        FxU32 j;
+        unsigned int j;
 
         glReadBuffer( dwBuffer == GR_BUFFER_BACKBUFFER
                       ? GL_BACK : GL_FRONT );
@@ -98,7 +98,7 @@ grLfbUnlock( GrLock_t dwType, GrBuffer_t dwBuffer )
             return FXFALSE;
         }
 
-        FxU32 ii,
+        unsigned int ii,
             x,
             y,
             maxx = 0,
@@ -134,8 +134,8 @@ grLfbUnlock( GrLock_t dwType, GrBuffer_t dwBuffer )
         if ( maxx >= minx )
         {
             maxx++; maxy++;
-            FxU32 xsize = maxx - minx;
-            FxU32 ysize = maxy - miny;
+            unsigned int xsize = maxx - minx;
+            unsigned int ysize = maxy - miny;
 
             // Draw a textured quad
             glPushAttrib( GL_COLOR_BUFFER_BIT|GL_TEXTURE_BIT|GL_DEPTH_BUFFER_BIT );
@@ -206,10 +206,8 @@ grLfbUnlock( GrLock_t dwType, GrBuffer_t dwBuffer )
 
 //*************************************************
 FX_ENTRY FxBool FX_CALL
-grLfbReadRegion( GrBuffer_t src_buffer,
-                 FxU32 src_x, FxU32 src_y,
-                 FxU32 src_width, FxU32 src_height,
-                 FxU32 dst_stride, void *dst_data )
+grLfbReadRegion( GrBuffer_t src_buffer, unsigned int src_x, unsigned int src_y, unsigned int src_width,
+                 unsigned int src_height, unsigned int dst_stride, void *dst_data )
 {
 #ifdef OGL_NOTDONE
     GlideMsg("grLfbReadRegion( %d, %d, %d, %d, %d, %d, --- )\n",
@@ -238,11 +236,9 @@ grLfbReadRegion( GrBuffer_t src_buffer,
 
 //*************************************************
 FX_ENTRY FxBool FX_CALL
-grLfbWriteRegion( GrBuffer_t dst_buffer,
-                  FxU32 dst_x, FxU32 dst_y,
-                  GrLfbSrcFmt_t src_format,
-                  FxU32 src_width, FxU32 src_height,
-                  FxI32 src_stride, void *src_data )
+grLfbWriteRegion( GrBuffer_t dst_buffer, unsigned int dst_x, unsigned int dst_y, 
+                  GrLfbSrcFmt_t src_format, unsigned int src_width, unsigned int src_height,
+                  int src_stride, void *src_data )
 {
 #ifdef OGL_NOTDONE
     GlideMsg("grLfbWriteRegion( %d, %d, %d, %d, %d, %d, %d, --- )\n",
@@ -251,7 +247,7 @@ grLfbWriteRegion( GrBuffer_t dst_buffer,
 
     RenderDrawTriangles( );
 
-    if ( src_stride != (FxI32)src_width )
+    if ( src_stride != (int)src_width )
     {
 //      Error( "grLfbWriteRegion: different width and stride.\n" );
         return FXTRUE;
@@ -305,7 +301,7 @@ grLfbConstantAlpha( GrAlpha_t alpha )
 }
 
 FX_ENTRY void FX_CALL 
-grLfbConstantDepth( FxU16 depth )
+grLfbConstantDepth( unsigned short depth )
 {
 #ifdef OGL_CRITICAL
     GlideMsg("grLfbConstantDepth( %u )\n", depth );

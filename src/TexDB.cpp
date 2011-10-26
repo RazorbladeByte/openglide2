@@ -42,11 +42,11 @@ TexDB::~TexDB( void )
     delete[] m_first;
 }
 
-GrTexInfo * TexDB::Find( FxU32 startAddress, GrTexInfo *info, FxU32 hash, 
-                  GLuint *pTexNum, GLuint *pTex2Num, bool *pal_change )
+GrTexInfo * TexDB::Find( unsigned int startAddress, GrTexInfo *info, unsigned int hash, 
+                         GLuint *pTexNum, GLuint *pTex2Num, bool *pal_change )
 {
-    Record  * r;
-    FxU32   sect = startAddress >> 15; // ( 32 * 1024 );
+    Record         * r;
+    unsigned int   sect = startAddress >> 15; // ( 32 * 1024 );
 
     for ( r = m_first[ sect ]; r != NULL; r = r->next )
     {
@@ -79,11 +79,11 @@ GrTexInfo * TexDB::Find( FxU32 startAddress, GrTexInfo *info, FxU32 hash,
     return NULL;
 }
 
-void TexDB::WipeRange(FxU32 startAddress, FxU32 endAddress, FxU32 hash)
+void TexDB::WipeRange(unsigned int startAddress, unsigned int endAddress, unsigned int hash)
 {
-    Record  ** p;
-    FxU32   stt_sect;
-    FxU32   end_sect;
+    Record         ** p;
+    unsigned int   stt_sect;
+    unsigned int   end_sect;
 
     stt_sect = startAddress >> 15; // ( 32 * 1024 );
 
@@ -108,7 +108,7 @@ void TexDB::WipeRange(FxU32 startAddress, FxU32 endAddress, FxU32 hash)
         end_sect = numberOfTexSections - 1;
     }
 
-    for ( FxU32 i = stt_sect; i <= end_sect; i++ )
+    for ( unsigned int i = stt_sect; i <= end_sect; i++ )
     {
         p = &( m_first[ i ] );
         while ( *p != NULL )
@@ -133,10 +133,11 @@ void TexDB::WipeRange(FxU32 startAddress, FxU32 endAddress, FxU32 hash)
     }
 }
 
-void TexDB::Add( FxU32 startAddress, FxU32 endAddress, GrTexInfo *info, FxU32 hash, GLuint *pTexNum, GLuint *pTex2Num )
+void TexDB::Add( unsigned int startAddress, unsigned int endAddress, GrTexInfo *info, 
+	             unsigned int hash, GLuint *pTexNum, GLuint *pTex2Num )
 {
-    Record  *r = new Record( pTex2Num != NULL );
-    FxU32   sect;
+    Record         *r = new Record( pTex2Num != NULL );
+    unsigned int   sect;
 
     sect = startAddress >> 15; // 32 * 1024
 
@@ -206,7 +207,7 @@ TexDB::Record::~Record( void )
    }
 }
 
-bool TexDB::Record::Match( FxU32 stt, GrTexInfo *inf, FxU32 h )
+bool TexDB::Record::Match( unsigned int stt, GrTexInfo *inf, unsigned int h )
 {
    return ( ( startAddress == stt ) && 
             ( inf->largeLod == info.largeLod ) && 

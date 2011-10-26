@@ -22,7 +22,7 @@
 
 /* Functions for handling display window */
 
-bool InitialiseOpenGLWindow(FxU wnd, int x, int y, int width, int height);
+bool InitialiseOpenGLWindow(unsigned int wnd, int x, int y, int width, int height);
 void FinaliseOpenGLWindow( void);
 
 void SetGamma(float value);

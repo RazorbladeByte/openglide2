@@ -71,41 +71,41 @@ void GLErro( const char *Funcao )
     }
 }
 
-void ConvertColorB( GrColor_t GlideColor, FxU8 &R, FxU8 &G, FxU8 &B, FxU8 &A )
+void ConvertColorB( GrColor_t GlideColor, unsigned char &R, unsigned char &G, unsigned char &B, unsigned char &A )
 {
     switch ( Glide.State.ColorFormat )
     {
     case GR_COLORFORMAT_ARGB:   //0xAARRGGBB
-        A = (FxU8)( ( GlideColor & 0xFF000000 ) >> 24 );
-        R = (FxU8)( ( GlideColor & 0x00FF0000 ) >> 16 );
-        G = (FxU8)( ( GlideColor & 0x0000FF00 ) >>  8 );
-        B = (FxU8)( ( GlideColor & 0x000000FF )       );
+        A = (unsigned char)( ( GlideColor & 0xFF000000 ) >> 24 );
+        R = (unsigned char)( ( GlideColor & 0x00FF0000 ) >> 16 );
+        G = (unsigned char)( ( GlideColor & 0x0000FF00 ) >>  8 );
+        B = (unsigned char)( ( GlideColor & 0x000000FF )       );
         break;
 
     case GR_COLORFORMAT_ABGR:   //0xAABBGGRR
-        A = (FxU8)( ( GlideColor & 0xFF000000 ) >> 24 );
-        B = (FxU8)( ( GlideColor & 0x00FF0000 ) >> 16 );
-        G = (FxU8)( ( GlideColor & 0x0000FF00 ) >>  8 );
-        R = (FxU8)( ( GlideColor & 0x000000FF )       );
+        A = (unsigned char)( ( GlideColor & 0xFF000000 ) >> 24 );
+        B = (unsigned char)( ( GlideColor & 0x00FF0000 ) >> 16 );
+        G = (unsigned char)( ( GlideColor & 0x0000FF00 ) >>  8 );
+        R = (unsigned char)( ( GlideColor & 0x000000FF )       );
         break;
 
     case GR_COLORFORMAT_RGBA:   //0xRRGGBBAA
-        R = (FxU8)( ( GlideColor & 0xFF000000 ) >> 24 );
-        G = (FxU8)( ( GlideColor & 0x00FF0000 ) >> 16 );
-        B = (FxU8)( ( GlideColor & 0x0000FF00 ) >>  8 );
-        A = (FxU8)( ( GlideColor & 0x000000FF )       );
+        R = (unsigned char)( ( GlideColor & 0xFF000000 ) >> 24 );
+        G = (unsigned char)( ( GlideColor & 0x00FF0000 ) >> 16 );
+        B = (unsigned char)( ( GlideColor & 0x0000FF00 ) >>  8 );
+        A = (unsigned char)( ( GlideColor & 0x000000FF )       );
         break;
 
     case GR_COLORFORMAT_BGRA:   //0xBBGGRRAA
-        B = (FxU8)( ( GlideColor & 0xFF000000 ) >> 24 );
-        G = (FxU8)( ( GlideColor & 0x00FF0000 ) >> 16 );
-        R = (FxU8)( ( GlideColor & 0x0000FF00 ) >>  8 );
-        A = (FxU8)( ( GlideColor & 0x000000FF )       );
+        B = (unsigned char)( ( GlideColor & 0xFF000000 ) >> 24 );
+        G = (unsigned char)( ( GlideColor & 0x00FF0000 ) >> 16 );
+        R = (unsigned char)( ( GlideColor & 0x0000FF00 ) >>  8 );
+        A = (unsigned char)( ( GlideColor & 0x000000FF )       );
         break;
     }
 }
 
-void ConvertColor4B( GrColor_t GlideColor, FxU32 &C )
+void ConvertColor4B( GrColor_t GlideColor, unsigned int &C )
 {
     switch ( Glide.State.ColorFormat )
     {
@@ -193,7 +193,7 @@ void ConvertColorF( GrColor_t GlideColor, float &R, float &G, float &B, float &A
 }
 
 //*************************************************
-FxU32 GetTexSize( const int Lod, const int aspectRatio, const int format )
+unsigned int GetTexSize( const int Lod, const int aspectRatio, const int format )
 {
     /*
     ** If the format is one of these:
@@ -341,7 +341,7 @@ void GetOptions( void )
 }
 
 
-FX_ENTRY void FX_CALL setConfig(FxU32 flags)
+FX_ENTRY void FX_CALL setConfig(unsigned int flags)
 {
     UserConfig.EnableMipMaps = ((flags & WRAPPER_FLAG_MIPMAPS) != 0);
 }
@@ -423,7 +423,7 @@ bool GenerateErrorFile( void )
 // Detect if Processor has MMX Instructions
 int DetectMMX( void )
 {
-    FxU32 Result;
+    unsigned int Result;
 
     #ifdef __GNUC__
         asm ("push %%ebx;"
@@ -456,7 +456,7 @@ int DetectMMX( void )
 
 // Copy Blocks of Memory Using MMX
 
-void MMXCopyMemory( void *Dst, void *Src, FxU32 NumberOfBytes )
+void MMXCopyMemory( void *Dst, void *Src, unsigned int NumberOfBytes )
 {
   if(DetectMMX != 0)
   {
@@ -469,7 +469,7 @@ void MMXCopyMemory( void *Dst, void *Src, FxU32 NumberOfBytes )
          "subl  $8, %0;"
          "jae   MMXCopyMemory_copying;"
          : /* No outputs */
-         : "r" ((FxU)NumberOfBytes), "r" (Src), "r" (Dst) /* Inputs */
+         : "r" ((unsigned int)NumberOfBytes), "r" (Src), "r" (Dst) /* Inputs */
          : "%mm0", "memory" /* Clobbers */
         );
     #else

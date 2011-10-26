@@ -30,7 +30,7 @@ PGUTexture::~PGUTexture( void )
 {
 }
 
-GrMipMapId_t PGUTexture::AllocateMemory( GrChipID_t tmu, FxU8 odd_even_mask, 
+GrMipMapId_t PGUTexture::AllocateMemory( GrChipID_t tmu, unsigned char odd_even_mask, 
                                          int width, int height,
                                          GrTextureFormat_t fmt, GrMipMapMode_t mm_mode,
                                          GrLOD_t smallest_lod, GrLOD_t largest_lod, 
@@ -41,8 +41,8 @@ GrMipMapId_t PGUTexture::AllocateMemory( GrChipID_t tmu, FxU8 odd_even_mask,
                                          GrTextureFilterMode_t magfilter_mode,
                                          float lod_bias, FxBool trilinear )
 {
-    FxU32   size = 0;
-    GrLOD_t lod;
+    unsigned int   size = 0;
+    GrLOD_t        lod;
 
     for ( lod = largest_lod; lod <= smallest_lod; lod++ )
     {
@@ -104,7 +104,7 @@ void PGUTexture::DownloadMipMap( GrMipMapId_t mmid, const void *src, const GuNcc
         info.data        = (void *)src;
 #ifdef OGL_UTEX
         {
-            FxU32 size = 0;
+            unsigned int size = 0;
 
             for ( GrLOD_t lod = info.largeLod; lod <= info.smallLod; lod++ )
             {
@@ -194,7 +194,7 @@ GrMipMapId_t PGUTexture::GetCurrentMipMap( GrChipID_t tmu )
     return m_current_id;
 }
 
-FxU32 PGUTexture::MemQueryAvail( GrChipID_t tmu )
+unsigned int PGUTexture::MemQueryAvail( GrChipID_t tmu )
 {
     return Textures->GetMemorySize( ) - m_free_mem;
 }

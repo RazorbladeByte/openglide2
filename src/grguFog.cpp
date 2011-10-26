@@ -25,14 +25,14 @@ grFogTable( const GrFog_t *ft )
 
     if ( InternalConfig.FogEnable )
     {
-        OG_memcpy( Glide.FogTable, (GrFog_t *)ft, GR_FOG_TABLE_SIZE * sizeof( FxU8 ) );
+        OG_memcpy( Glide.FogTable, (GrFog_t *)ft, GR_FOG_TABLE_SIZE * sizeof( unsigned char ) );
         Glide.FogTable[ GR_FOG_TABLE_SIZE ] = 255;
 		
         for ( int i = 0; i < GR_FOG_TABLE_SIZE; i++ )
         {
             for ( unsigned int j = intStartEnd[ i ]; j < intStartEnd[ i + 1 ]; j++ )
             {
-                OpenGL.FogTable[ j ] = (FxU8)( Glide.FogTable[ i ] + 
+                OpenGL.FogTable[ j ] = (unsigned char)( Glide.FogTable[ i ] + 
                     ( Glide.FogTable[ i + 1 ] - Glide.FogTable[ i ] ) * ( j - intStartEnd[ i ] ) / 
                     intEndMinusStart[ i ] );
             }
@@ -153,7 +153,7 @@ guFogGenerateExp2( GrFog_t *fogtable, float density )
     {
         Temp = ( 1.0f - (float) exp( ( -density)  * guFogTableIndexToW( i ) ) * 
                (float)exp( (-density)  * guFogTableIndexToW( i ) ) )  * 255.0f;
-        fogtable[ i ] = (FxU8) Temp;
+        fogtable[ i ] = (unsigned char) Temp;
     }
 }
 
@@ -188,7 +188,7 @@ guFogGenerateLinear( GrFog_t *fogtable,
     ZeroMemory( fogtable, GR_FOG_TABLE_SIZE );
     for( i = Start; i <= End; i++ )
     {
-        fogtable[ i ] = (FxU8)((float)( End - Start ) / 255.0f * (float)( i - Start ));
+        fogtable[ i ] = (unsigned char)((float)( End - Start ) / 255.0f * (float)( i - Start ));
     }
 
     for( i = End; i < GR_FOG_TABLE_SIZE; i++ )

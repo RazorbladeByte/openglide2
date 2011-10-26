@@ -13,15 +13,15 @@ static HGLRC hRC;
 static HWND  hWND;
 static struct
 {
-    FxU16 red[ 256 ];
-    FxU16 green[ 256 ];
-    FxU16 blue[ 256 ];
+    unsigned short red[ 256 ];
+    unsigned short green[ 256 ];
+    unsigned short blue[ 256 ];
 } old_ramp;
 
 static BOOL ramp_stored  = false;
 static BOOL mode_changed = false;
 
-bool InitialiseOpenGLWindow(FxU wnd, int x, int y, int width, int height)
+bool InitialiseOpenGLWindow(unsigned int wnd, int x, int y, int width, int height)
 {
     PIXELFORMATDESCRIPTOR   pfd;
     int                     PixFormat;
@@ -167,10 +167,10 @@ void RestoreGamma()
 
 bool SetScreenMode(int &xsize, int &ysize)
 {
-    HDC     hdc;
-    FxU32   bits_per_pixel;
-    bool    found;
-    DEVMODE DevMode;
+    HDC          hdc;
+    unsigned int bits_per_pixel;
+    bool         found;
+    DEVMODE      DevMode;
 
     hdc = GetDC( hWND );
     bits_per_pixel = GetDeviceCaps( hdc, BITSPIXEL );
@@ -183,8 +183,8 @@ bool SetScreenMode(int &xsize, int &ysize)
           !found && EnumDisplaySettings( NULL, i, &DevMode ) != false; 
           i++ )
     {
-        if ( ( DevMode.dmPelsWidth == (FxU32)xsize ) && 
-             ( DevMode.dmPelsHeight == (FxU32)ysize ) && 
+        if ( ( DevMode.dmPelsWidth  == (unsigned int)xsize ) && 
+             ( DevMode.dmPelsHeight == (unsigned int)ysize ) && 
              ( DevMode.dmBitsPerPel == bits_per_pixel ) )
         {
             found = true;
@@ -232,13 +232,13 @@ void ReportError(const char *message)
 #pragma optimize( "", off )
 float ClockFrequency( void )
 {
-    FxI64   i64_perf_start, 
-            i64_perf_freq, 
-            i64_perf_end,
-            i64_clock_start,
-            i64_clock_end;
-    double  d_loop_period, 
-            d_clock_freq;
+    long long i64_perf_start, 
+              i64_perf_freq, 
+              i64_perf_end,
+              i64_clock_start,
+              i64_clock_end;
+    double    d_loop_period, 
+              d_clock_freq;
 
     QueryPerformanceFrequency( (LARGE_INTEGER*)&i64_perf_freq );
 

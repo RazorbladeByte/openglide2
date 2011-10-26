@@ -9,12 +9,13 @@
 #include "PGTexture.h"
 #include "OGLTables.h"
 
-static bool InterpretScreenResolution(GrScreenResolution_t eResolution, FxU32 &width, FxU32 &height)
+static bool InterpretScreenResolution(GrScreenResolution_t eResolution, unsigned int &width,
+	                                  unsigned int &height)
 {
     if ( eResolution > GR_RESOLUTION_400x300 )
         return false;
 
-    static const FxU32 windowDimensions[16][2] =
+    static const unsigned int windowDimensions[16][2] =
     {
         {  320,  200 }, // GR_RESOLUTION_320x200
         {  320,  240 }, // GR_RESOLUTION_320x240
@@ -61,8 +62,8 @@ static bool InterpretScreenRefresh(GrScreenRefresh_t eRefresh, GLuint &refresh)
     return true;
 }
 
-static FxU32 int_log2 (FxU32 val) {
-    FxU32 log = 0;
+static unsigned int int_log2 (unsigned int val) {
+    unsigned int log = 0;
     while ((val >>= 1) != 0)
         log++;
     return log;
@@ -123,7 +124,7 @@ grGlideInit( void )
         Error( "Cannot allocate enough memory for Texture Buffer in User setting, using default" );
     }
 
-    Glide.TexMemoryMaxPosition   = (FxU32)Glide.TextureMemory;
+    Glide.TexMemoryMaxPosition   = (unsigned int)Glide.TextureMemory;
     InternalConfig.ShamelessPlug = UserConfig.ShamelessPlug;
 }
 
@@ -241,7 +242,7 @@ grSstQueryBoards( GrHwConfiguration *hwConfig )
 
 //*************************************************
 FX_ENTRY FxBool FX_CALL
-grSstWinOpen(   FxU hwnd,
+grSstWinOpen(   unsigned int hwnd,
                 GrScreenResolution_t res,
                 GrScreenRefresh_t ref,
                 GrColorFormat_t cformat,
@@ -294,8 +295,8 @@ grSstWinOpen(   FxU hwnd,
     // Initializing Glide and OpenGL
     InitOpenGL( );
 
-    Glide.SrcBuffer.Address = new FxU16[ OPENGLBUFFERMEMORY * 2 ];
-    Glide.DstBuffer.Address = new FxU16[ OPENGLBUFFERMEMORY * 2 ];
+    Glide.SrcBuffer.Address = new unsigned short[ OPENGLBUFFERMEMORY * 2 ];
+    Glide.DstBuffer.Address = new unsigned short[ OPENGLBUFFERMEMORY * 2 ];
     Glide.LFBTextureSize = 2 << int_log2(Glide.WindowWidth > Glide.WindowHeight ? (Glide.WindowWidth-1) : (Glide.WindowHeight-1));
 
     glGenTextures( 1, &Glide.LFBTexture );
@@ -317,7 +318,7 @@ grSstWinOpen(   FxU hwnd,
     ZeroMemory( Glide.SrcBuffer.Address, OPENGLBUFFERMEMORY * 2 );
 
 #define BLUE_SCREEN     (0x07FF)
-    for( FxU32 i = 0; i < Glide.WindowTotalPixels; i++ )
+    for( unsigned int i = 0; i < Glide.WindowTotalPixels; i++ )
     {
         Glide.DstBuffer.Address[i] = BLUE_SCREEN;
     }
@@ -499,7 +500,7 @@ grSstSelect( int which_sst )
 //*************************************************
 //* Returns the Screen Height
 //*************************************************
-FX_ENTRY FxU32 FX_CALL
+FX_ENTRY unsigned int FX_CALL
 grSstScreenHeight( void )
 {
 #ifdef OGL_DONE
@@ -512,7 +513,7 @@ grSstScreenHeight( void )
 //*************************************************
 //* Returns the Screen Width
 //*************************************************
-FX_ENTRY FxU32 FX_CALL
+FX_ENTRY unsigned int FX_CALL
 grSstScreenWidth( void )
 {
 #ifdef OGL_DONE
@@ -580,7 +581,7 @@ grSstResetPerfStats( void )
 }
 
 //*************************************************
-FX_ENTRY FxU32 FX_CALL 
+FX_ENTRY unsigned int FX_CALL 
 grSstVideoLine( void )
 {
 #ifdef OGL_NOTDONE
@@ -614,7 +615,7 @@ grSstIsBusy( void )
 
 //*************************************************
 FX_ENTRY FxBool FX_CALL
-grSstControl( FxU32 code )
+grSstControl( unsigned int code )
 { 
 #ifdef OGL_NOTDONE
     GlideMsg( "grSstControl( %lu )\n", code ); 
@@ -648,15 +649,15 @@ grSstControlMode( GrControl_t mode )
 //*************************************************
 //* Return the Value of the graphics status register
 //*************************************************
-FX_ENTRY FxU32 FX_CALL 
+FX_ENTRY unsigned int FX_CALL 
 grSstStatus( void )
 {
 #ifdef OGL_PARTDONE
     GlideMsg( "grSstStatus( )\n" );
 #endif
 
-//    FxU32 Status = 0x0FFFF43F;
-    FxU32 Status = 0x0FFFF03F;
+//    unsigned int Status = 0x0FFFF43F;
+    unsigned int Status = 0x0FFFF03F;
     
     // Vertical Retrace
     Status      |= ( ! Glide.State.VRetrace ) << 6;

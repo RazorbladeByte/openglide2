@@ -18,7 +18,7 @@ void ConvertColorF( GrColor_t GlideColor, float &R, float &G, float &B, float &A
 //* Clear all the Buffers
 //*************************************************
 FX_ENTRY void FX_CALL
-grBufferClear( GrColor_t color, GrAlpha_t alpha, FxU16 depth )
+grBufferClear( GrColor_t color, GrAlpha_t alpha, unsigned short depth )
 {
 #if defined( OGL_PARTDONE ) || defined( OGL_COMBINE )
     GlideMsg( "grBufferClear( %d, %d, %d )\n", color, alpha, depth );

@@ -35,7 +35,7 @@ extern "C" {
 
 /* Video defines */
 
-typedef FxI32 GrScreenRefresh_t;
+typedef int GrScreenRefresh_t;
 #define GR_REFRESH_60Hz   0x0
 #define GR_REFRESH_70Hz   0x1
 #define GR_REFRESH_72Hz   0x2
@@ -47,7 +47,7 @@ typedef FxI32 GrScreenRefresh_t;
 #define GR_REFRESH_120Hz  0x8
 #define GR_REFRESH_NONE   0xff
 
-typedef FxI32 GrScreenResolution_t;
+typedef int GrScreenResolution_t;
 #define GR_RESOLUTION_320x200   0x0
 #define GR_RESOLUTION_320x240   0x1
 #define GR_RESOLUTION_400x256   0x2

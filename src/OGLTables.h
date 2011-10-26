@@ -40,18 +40,18 @@ typedef struct
 } OGLColorTable;
 
 // OGLTextureTables.cpp
-extern OGLAspect texAspects[ 7 ];
-extern OGLTexInfo texInfo[ 7 ][ 9 ];
-extern FxU32 nSquareLod[ 2 ][ 7 ][ 9 ];
-extern FxU32 nSquareTexLod[ 2 ][ 7 ][ 9 ][ 9 ];
+extern OGLAspect    texAspects[ 7 ];
+extern OGLTexInfo   texInfo[ 7 ][ 9 ];
+extern unsigned int nSquareLod[ 2 ][ 7 ][ 9 ];
+extern unsigned int nSquareTexLod[ 2 ][ 7 ][ 9 ][ 9 ];
 
 // OGLColorAlphaTables.cpp
 extern OGLAlphaTable alphaCombineTable[ 14 ][ 17 ];
 extern OGLColorTable colorCombineTable[ 14 ][ 17 ];
 
 // OGLFogTables.cpp
-extern FxU32 intStartEnd[ GR_FOG_TABLE_SIZE + 1 ];
-extern FxU32 intEndMinusStart[ GR_FOG_TABLE_SIZE ];
-extern float tableIndexToW[ GR_FOG_TABLE_SIZE ];
+extern unsigned int intStartEnd[ GR_FOG_TABLE_SIZE + 1 ];
+extern unsigned int intEndMinusStart[ GR_FOG_TABLE_SIZE ];
+extern float        tableIndexToW[ GR_FOG_TABLE_SIZE ];
 
 #endif

@@ -76,7 +76,7 @@ grCullMode( GrCullMode_t mode )
 //* Set the size and location of the hardware clipping window
 //*************************************************
 FX_ENTRY void FX_CALL 
-grClipWindow( FxU32 minx, FxU32 miny, FxU32 maxx, FxU32 maxy )
+grClipWindow( unsigned int minx, unsigned int miny, unsigned int maxx, unsigned int maxy )
 {
 #ifdef OGL_PARTDONE
     GlideMsg( "grClipWindow( %d, %d, %d, %d )\n", minx, miny, maxx, maxy );
@@ -91,8 +91,8 @@ grClipWindow( FxU32 minx, FxU32 miny, FxU32 maxx, FxU32 maxy )
 
     if ( ( Glide.State.ClipMinX != 0 ) || 
          ( Glide.State.ClipMinY != 0 ) ||
-         ( Glide.State.ClipMaxX != (FxU32) Glide.WindowWidth ) ||
-         ( Glide.State.ClipMaxY != (FxU32) Glide.WindowHeight ) )
+         ( Glide.State.ClipMaxX != (unsigned int) Glide.WindowWidth ) ||
+         ( Glide.State.ClipMaxY != (unsigned int) Glide.WindowHeight ) )
     {
         OpenGL.Clipping = true;
     }
@@ -160,7 +160,7 @@ grResetTriStats( void )
 
 //*************************************************
 FX_ENTRY void FX_CALL
-grTriStats( FxU32 *trisProcessed, FxU32 *trisDrawn )
+grTriStats( unsigned int *trisProcessed, unsigned int *trisDrawn )
 {
 #ifdef OGL_NOTDONE
     GlideMsg( "grTriStats( )\n" );
@@ -169,7 +169,7 @@ grTriStats( FxU32 *trisProcessed, FxU32 *trisDrawn )
 
 //*************************************************
 FX_ENTRY void FX_CALL
-grHints( GrHint_t hintType, FxU32 hintMask )
+grHints( GrHint_t hintType, unsigned int hintMask )
 {
 #ifdef OGL_PARTDONE
     GlideMsg( "grHints( %d, %d )\n", hintType, hintMask );
@@ -186,21 +186,21 @@ grHints( GrHint_t hintType, FxU32 hintMask )
 
 FX_ENTRY void FX_CALL 
 ConvertAndDownloadRle( GrChipID_t        tmu,
-                       FxU32             startAddress,
+                       unsigned int      startAddress,
                        GrLOD_t           thisLod,
                        GrLOD_t           largeLod,
                        GrAspectRatio_t   aspectRatio,
                        GrTextureFormat_t format,
-                       FxU32             evenOdd,
-                       FxU8              *bm_data,
+                       unsigned int      evenOdd,
+                       unsigned char     *bm_data,
                        long              bm_h,
-                       FxU32             u0,
-                       FxU32             v0,
-                       FxU32             width,
-                       FxU32             height,
-                       FxU32             dest_width,
-                       FxU32             dest_height,
-                       FxU16             *tlut )
+                       unsigned int      u0,
+                       unsigned int      v0,
+                       unsigned int      width,
+                       unsigned int      height,
+                       unsigned int      dest_width,
+                       unsigned int      dest_height,
+                       unsigned short    *tlut )
 {
 #ifdef OGL_NOTDONE
     GlideMsg( "ConvertAndDownloadRle( %d, %lu, %d, %d, %d, %d, %d, ---, %l, %lu, %lu, %lu, %lu, %lu, %lu, --- )\n",
@@ -211,7 +211,7 @@ ConvertAndDownloadRle( GrChipID_t        tmu,
 
 //*************************************************
 FX_ENTRY void FX_CALL 
-grCheckForRoom( FxI32 n )
+grCheckForRoom( int n )
 {
 #ifdef OGL_NOTDONE
     GlideMsg( "grCheckForRoom( %l )\n", n );
@@ -220,7 +220,7 @@ grCheckForRoom( FxI32 n )
 
 //*************************************************
 FX_ENTRY void FX_CALL
-grParameterData( FxU32 param, FxU32 components, FxU32 type, FxI32 offset )
+grParameterData( unsigned int param, unsigned int components, unsigned int type, int offset )
 {
 #ifdef OGL_NOTDONE
     GlideMsg( "grParameterData( %lu, %lu, %lu, %l )\n",
@@ -230,10 +230,7 @@ grParameterData( FxU32 param, FxU32 components, FxU32 type, FxI32 offset )
 
 //*************************************************
 FX_ENTRY int FX_CALL
-guEncodeRLE16( void *dst, 
-               void *src, 
-               FxU32 width, 
-               FxU32 height )
+guEncodeRLE16( void *dst, void *src, unsigned int width, unsigned int height )
 {
 #ifdef OGL_NOTDONE
     GlideMsg( "guEncodeRLE16( ---, ---, %lu, %lu ) = 1\n", width, height ); 
@@ -243,8 +240,8 @@ guEncodeRLE16( void *dst,
 }
 
 //*************************************************
-FX_ENTRY FxU32 FX_CALL
-guEndianSwapWords( FxU32 value )
+FX_ENTRY unsigned int FX_CALL
+guEndianSwapWords( unsigned int value )
 {
 #ifdef OGL_DONE
     GlideMsg( "guEndianSwapWords( %lu )\n", value );
@@ -254,8 +251,8 @@ guEndianSwapWords( FxU32 value )
 }
 
 //*************************************************
-FX_ENTRY FxU16 FX_CALL
-guEndianSwapBytes( FxU16 value )
+FX_ENTRY unsigned short FX_CALL
+guEndianSwapBytes( unsigned short value )
 {
 #ifdef OGL_DONE
     GlideMsg( "guEndianSwapBytes( %u )\n", value );
