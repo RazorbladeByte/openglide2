@@ -1,5 +1,8 @@
+Changes v0.2:
+*mingw32 support
+*more cleanup
 
-Changes in v0.1:
+Changes v0.1:
 
 *code cleanup
 *added grSstOpen
