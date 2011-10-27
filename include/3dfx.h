@@ -13,11 +13,6 @@
 
 typedef int FxBool;
 
-/* color types */
-
-typedef unsigned long                FxColor_t;
-typedef struct { float r, g, b, a; } FxColor4;
-
 /* fundamental types */
 
 #define FXTRUE    1
@@ -25,13 +20,8 @@ typedef struct { float r, g, b, a; } FxColor4;
 
 /* helper macros */
 
-#define FXUNUSED( a ) ((void)(a))
 #define FXBIT( i )    ( 1L << (i) )
-#ifdef __GNUC__
-#define VARARGDECL(t) extern "C" t
-#else
 #define VARARGDECL(t) t __cdecl
-#endif
 
 /* export macros */
 #define FX_ENTRY __declspec(dllexport)
