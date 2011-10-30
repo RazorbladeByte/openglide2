@@ -5,8 +5,6 @@
 
 /* Utility File */
 
-#include "win32.h"
-
 #include "wrapper_config.h"
 #include "GlOgl.h"
 #include "Glextensions.h"
