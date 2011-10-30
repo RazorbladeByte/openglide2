@@ -152,7 +152,6 @@
     <ClInclude Include="src/TexDB.h" />
     <ClInclude Include="src/glext.h" />
     <ClInclude Include="src\GlOgl.h" />
-    <ClInclude Include="src\sst1init.h" />
     <ClInclude Include="src\win32.h" />
     <ClInclude Include="src\wrapper_config.h" />
   </ItemGroup>
@@ -179,7 +178,6 @@
     <ClCompile Include="src/grguTex.cpp" />
     <ClCompile Include="src\grguDepth.cpp" />
     <ClCompile Include="src\library.cpp" />
-    <ClCompile Include="src\sst1init.cpp" />
     <ClCompile Include="src\win32.cpp" />
   </ItemGroup>
   <ItemGroup>

@@ -38,7 +38,7 @@ void Convert8888to565(unsigned int *Src, unsigned short *Dst, unsigned int Pixel
 
 void Convert565to5551( unsigned int *Buffer1, unsigned int *Buffer2, int Pixels )
 {
-	if(DetectMMX != 0)
+	if (DetectMMX != 0)
 	{
 		return MMX565to5551( Buffer1, Buffer2, Pixels );
 	}
@@ -132,7 +132,7 @@ void Cpp565to5551( unsigned int *Buffer1, unsigned int *Buffer2, int Pixels )
 
 void Convert5551to565( unsigned int *Buffer1, unsigned int *Buffer2, int Pixels )
 {
-	if(DetectMMX != 0)
+	if (DetectMMX != 0)
 	{
 		return MMX5551to565( Buffer1, Buffer2, Pixels );
 	}
@@ -217,7 +217,7 @@ void Cpp5551to565( unsigned int *Buffer1, unsigned int *Buffer2, int Pixels )
 
 void Convert4444to4444special( unsigned int *Buffer1, unsigned int *Buffer2, int Pixels )
 {
-	if(DetectMMX != 0)
+	if (DetectMMX != 0)
 	{
 		return MMX4444to4444special( Buffer1, Buffer2, Pixels );
 	}
@@ -304,7 +304,7 @@ void Cpp4444to4444special( unsigned int *Buffer1, unsigned int *Buffer2, int Pix
 
 void Convert1555to5551( unsigned int *Buffer1, unsigned int *Buffer2, int Pixels )
 {
-	if(DetectMMX != 0)
+	if (DetectMMX != 0)
 	{
 		return MMX1555to5551( Buffer1, Buffer2, Pixels );
 	}
@@ -389,7 +389,7 @@ void Cpp1555to5551( unsigned int *Buffer1, unsigned int *Buffer2, int Pixels )
 
 void Convert565to8888( unsigned short *Buffer1, unsigned int *Buffer2, unsigned int Pixels )
 {
-	if(DetectMMX != 0)
+	if (DetectMMX != 0)
 	{
 		return MMX565to8888( Buffer1, Buffer2, Pixels );
 	}

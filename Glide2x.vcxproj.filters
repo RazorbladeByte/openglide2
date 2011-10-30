@@ -41,9 +41,6 @@
     <ClInclude Include="src\wrapper_config.h">
       <Filter>Header</Filter>
     </ClInclude>
-    <ClInclude Include="src\sst1init.h">
-      <Filter>Header</Filter>
-    </ClInclude>
     <ClInclude Include="src\win32.h">
       <Filter>Header</Filter>
     </ClInclude>
@@ -110,9 +107,6 @@
       <Filter>Source</Filter>
     </ClCompile>
     <ClCompile Include="src\grguDepth.cpp">
-      <Filter>Source</Filter>
-    </ClCompile>
-    <ClCompile Include="src\sst1init.cpp">
       <Filter>Source</Filter>
     </ClCompile>
     <ClCompile Include="src\win32.cpp">
