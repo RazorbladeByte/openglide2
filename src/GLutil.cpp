@@ -456,7 +456,7 @@ int DetectMMX( void )
 
 // Copy Blocks of Memory Using MMX
 
-void MMXCopyMemory( void *Dst, void *Src, unsigned int NumberOfBytes )
+void MMX_memcpy( void *Dst, void *Src, unsigned int NumberOfBytes )
 {
   if(DetectMMX != 0)
   {

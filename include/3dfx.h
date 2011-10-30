@@ -30,7 +30,6 @@ typedef int FxBool;
 /* customs  */
 
 #define FASTCALL __fastcall
-#define OG_memcpy MMXCopyMemory
 
 typedef int (__stdcall *ExtFn)();
 

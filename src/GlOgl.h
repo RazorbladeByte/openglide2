@@ -284,7 +284,7 @@ void InitOpenGL( void );
 void GetOptions( void );
 void InitMainVariables( void );
 
-void MMXCopyMemory( void *Dst, void *Src, unsigned int NumberOfBytes );
+void MMX_memcpy( void *Dst, void *Src, unsigned int NumberOfBytes );
 
 int DetectMMX();
 
