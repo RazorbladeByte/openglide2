@@ -1,3 +1,2 @@
-*Make GCC compatible
-*Make OpenWatcom compatible
+*Make DOS compatible
 *Glide Pre-2.2/3 calls

@@ -20,9 +20,78 @@ static struct
 
 static BOOL ramp_stored  = false;
 static BOOL mode_changed = false;
+#ifdef USE_SDL
+static BOOL wasInit      = false;
+#endif
 
 bool InitialiseOpenGLWindow(unsigned int wnd, int x, int y, int width, int height)
 {
+    #ifdef USE_SDL
+    bool FullScreen = UserConfig.InitFullScreen;
+    wasInit = SDL_WasInit(SDL_INIT_VIDEO)!=0;
+    if(!wasInit)
+    {
+        bool err = false;
+        char *oldWindowId = 0;
+        char windowId[40];
+
+        if (wnd)
+        {   // Set SDL window ID
+            sprintf (windowId, "SDL_WINDOWID=%ld", (long)wnd);
+            oldWindowId = getenv("SDL_WINDOWID");
+            if (oldWindowId)
+                oldWindowId = strdup(oldWindowId);
+            putenv(windowId);
+        }
+
+        if (SDL_Init(SDL_INIT_VIDEO))
+        {
+            GlideMsg("Can't init SDL %s",SDL_GetError());
+            err = true;
+        }
+
+        if (wnd)
+        {   // Restore old value
+            if (!oldWindowId)
+                putenv("SDL_WINDOWID");
+            else
+            {
+                sprintf (windowId, "SDL_WINDOWID=%s", oldWindowId);
+                putenv(windowId);
+                free (oldWindowId);
+            }
+        }
+
+        if (err)
+            return false;
+    } else {
+        SDL_Surface* tmpSurface = SDL_GetVideoSurface();
+        if (tmpSurface)
+        {
+            // Preserve window/fullscreen mode in SDL apps and override config file entry
+           (tmpSurface->flags&SDL_FULLSCREEN) ? (FullScreen = true) : (FullScreen = false);
+        }
+    } 
+
+    SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
+    SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);
+
+    if((SDL_SetVideoMode(width, height, 32, FullScreen ? SDL_OPENGL|SDL_FULLSCREEN : SDL_OPENGL)) == 0)
+    {
+        GlideMsg("Video mode set failed: %s\n", SDL_GetError());
+        return false;
+    }
+
+    SDL_GL_GetAttribute(SDL_GL_DEPTH_SIZE, &height);
+    if ( height > 16 ) {
+        UserConfig.PrecisionFix = false;
+    }
+
+    if(SDL_GetGammaRamp(old_ramp.red, old_ramp.green, old_ramp.blue) != -1)
+        ramp_stored = true;
+
+    return true;
+    #else
     PIXELFORMATDESCRIPTOR   pfd;
     int                     PixFormat;
     unsigned int            BitsPerPixel;
@@ -115,10 +184,17 @@ bool InitialiseOpenGLWindow(unsigned int wnd, int x, int y, int width, int heigh
 
     ReleaseDC( NULL, pDC );
     return true;
+    #endif
 }
 
-void FinaliseOpenGLWindow( void)
+void FinaliseOpenGLWindow(void)
 {
+    #ifdef USE_SDL
+	if ( ramp_stored )
+        SDL_SetGammaRamp(old_ramp.red, old_ramp.green, old_ramp.blue);
+    if (!wasInit)
+        SDL_Quit();
+    #else
     if ( ramp_stored )
     {
         HDC pDC = GetDC( NULL );
@@ -136,6 +212,7 @@ void FinaliseOpenGLWindow( void)
     {
         ResetScreenMode( );
     }
+    #endif
 }
 
 void SetGamma(float value)
@@ -147,7 +224,9 @@ void SetGamma(float value)
         WORD blue[256];
     } ramp;
     int i;
+    #ifndef USE_SDL
     HDC pDC = GetDC( NULL );
+    #endif
 
     for ( i = 0; i < 256; i++ )
     {
@@ -156,9 +235,13 @@ void SetGamma(float value)
         ramp.red[ i ] = ramp.green[ i ] = ramp.blue[ i ] = ( v & 0xff00 );
     }
 
+    #ifdef USE_SDL
+	SDL_SetGammaRamp(ramp.red, ramp.green, ramp.blue);
+    #else
     BOOL res = SetDeviceGammaRamp( pDC, &ramp );
 
     ReleaseDC( NULL, pDC );
+    #endif
 }
 
 void RestoreGamma()
@@ -167,6 +250,9 @@ void RestoreGamma()
 
 bool SetScreenMode(int &xsize, int &ysize)
 {
+    #ifdef USE_SDL
+	return true;
+    #else
     HDC          hdc;
     unsigned int bits_per_pixel;
     bool         found;
@@ -192,25 +278,23 @@ bool SetScreenMode(int &xsize, int &ysize)
     }
     
     return ( found && ChangeDisplaySettings( &DevMode, CDS_RESET|CDS_FULLSCREEN ) == DISP_CHANGE_SUCCESSFUL );
+    #endif
 }
 
 void ResetScreenMode()
 {
+    #ifndef USE_SDL
     ChangeDisplaySettings( NULL, 0 );
+    #endif
 }
 
 void SwapBuffers()
 {
+    #ifdef USE_SDL
+	SDL_GL_SwapBuffers();
+    #else
     SwapBuffers(hDC);
-}
-
-
-
-/* Windows specific functions for handling OpenGL extensions */
-
-ExtFn OGLGetProcAddress(const char *x)
-{
-    return wglGetProcAddress(x);
+    #endif
 }
 
 

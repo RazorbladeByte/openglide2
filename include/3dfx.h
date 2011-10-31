@@ -9,17 +9,13 @@
 #ifndef __3DFX_H__
 #define __3DFX_H__
 
-/* basic data types */
-
+/* types */
 typedef int FxBool;
-
-/* fundamental types */
 
 #define FXTRUE    1
 #define FXFALSE   0
 
 /* helper macros */
-
 #define FXBIT( i )    ( 1L << (i) )
 #define VARARGDECL(t) t __cdecl
 
@@ -28,9 +24,6 @@ typedef int FxBool;
 #define FX_CALL __stdcall
 
 /* customs  */
-
 #define FASTCALL __fastcall
-
-typedef int (__stdcall *ExtFn)();
 
 #endif /* !__3DFX_H__ */

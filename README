@@ -1,5 +1,5 @@
-               openglide2 - a glide2-to-OpenGL wrapper
-                  based on OpenGLide by Fabio Barros 
+                          openglide2 - a glide2-to-OpenGL wrapper
+                            based on OpenGLide by Fabio Barros 
 
 Version:  0.2			
 Platform: win32
@@ -7,6 +7,6 @@ Compiler: msvc10
           mingw
 
 Notes:
- 1. mingw has only been tested to compile and the binary is not guaranteed to work.
+ 1. mingw will require -mmmx and --add-underscore to build successfully.
  2. support for all non-windows platforms have been dropped dos may or may come back later on.
 

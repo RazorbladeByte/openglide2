@@ -17,8 +17,13 @@
 #include <time.h>
 #include <io.h>
 #include <math.h>
+#ifdef USE_SDL
+#include "SDL.h"
+#include "SDL_opengl.h"
+#else
 #include <GL/gl.h>
 #include <GL/glu.h>
+#endif
 
 /* Functions for handling display window */
 
@@ -35,7 +40,11 @@ void SwapBuffers();
 
 /* Functions for handling OpenGL extensions */
 
-ExtFn OGLGetProcAddress(const char *x);
+#ifdef USE_SDL
+    #define OGLGetProcAddress SDL_GL_GetProcAddress
+#else
+    #define OGLGetProcAddress wglGetProcAddress
+#endif
 
 /* Functions for reporting errors */
 
