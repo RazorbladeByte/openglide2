@@ -3,6 +3,10 @@
 //                  Licensed under the LGPL               
 //********************************************************
 
+#ifdef _MSC_VER
+#pragma warning(disable: 4996)
+#endif
+
 #include "win32.h"
 #include "GlOgl.h"
 
