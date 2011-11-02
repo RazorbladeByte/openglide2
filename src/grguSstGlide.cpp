@@ -1,4 +1,3 @@
-#pragma warning ( disable : 4800 )
 //********************************************************
 //            openglide2 - Glide to OpenGL Wrapper        
 //                  Licensed under the LGPL               
