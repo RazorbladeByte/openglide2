@@ -802,9 +802,6 @@ grFogTable( const GrFog_t ft[] );
 FX_ENTRY void FX_CALL 
 grGammaCorrectionValue( float value );
 
-/*FX_ENTRY void FX_CALL
-grSplash(float x, float y, float width, float height, FxU32 frame);*/
-
 /*
 ** texture mapping control functions
 */
@@ -1043,9 +1040,6 @@ grGlideGetState( GrState *state );
 
 FX_ENTRY void FX_CALL
 grGlideSetState( const GrState *state );
-
-FX_ENTRY void FX_CALL
-grGlideShamelessPlug(const FxBool on);
 
 FX_ENTRY void FX_CALL
 grHints(GrHint_t hintType, unsigned int hintMask);

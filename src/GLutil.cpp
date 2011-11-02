@@ -266,9 +266,6 @@ void GetOptions( void )
 
     UserConfig.Priority                     = 2;
 
-    // Maintain existing behaviour
-    UserConfig.ShamelessPlug                = false;
-
     strcpy( Path, INIFILE );
 
     GlideMsg( "Configuration file is %s\n", Path );
@@ -327,8 +324,6 @@ void GetOptions( void )
                 UserConfig.Wrap565to5551 = atoi( Pointer ) ? true : false;
             if ( (Pointer = FindConfig(Path, "FrameBufferMemorySize")) )
                 UserConfig.FrameBufferMemorySize = atoi( Pointer );
-            if ( (Pointer = FindConfig(Path, "ShamelessPlug")) )
-                UserConfig.ShamelessPlug = atoi( Pointer ) ? true : false;;
         }
         else
         {

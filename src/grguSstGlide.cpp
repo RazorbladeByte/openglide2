@@ -125,7 +125,6 @@ grGlideInit( void )
     }
 
     Glide.TexMemoryMaxPosition   = (unsigned int)Glide.TextureMemory;
-    InternalConfig.ShamelessPlug = UserConfig.ShamelessPlug;
 }
 
 //*************************************************
@@ -211,17 +210,6 @@ grGlideGetState( GrState *state )
 #endif
 
     CopyMemory( state, &Glide.State, sizeof( GlideState ) );
-}
-
-//*************************************************
-FX_ENTRY void FX_CALL
-grGlideShamelessPlug( const FxBool on )
-{
-#ifdef OGL_DONE
-    GlideMsg( "grGlideShamelessPlug( %d )\n", on );
-#endif
-    if (!UserConfig.ShamelessPlug)
-        InternalConfig.ShamelessPlug = on;
 }
 
 //*************************************************
