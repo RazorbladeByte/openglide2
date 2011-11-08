@@ -17,7 +17,6 @@ typedef int FxBool;
 
 /* helper macros */
 #define FXBIT( i )    ( 1L << (i) )
-#define VARARGDECL(t) t __cdecl
 
 /* export macros */
 #define FX_ENTRY __declspec(dllexport)

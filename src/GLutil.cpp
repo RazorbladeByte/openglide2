@@ -19,7 +19,7 @@ extern unsigned long    NumberOfErrors;
 
 // Functions
 
-VARARGDECL(void) GlideMsg( const char *szString, ... )
+void __cdecl GlideMsg( const char *szString, ... )
 {
     va_list( Arg );
     va_start( Arg, szString );
@@ -36,7 +36,7 @@ VARARGDECL(void) GlideMsg( const char *szString, ... )
     va_end( Arg );
 }
 
-VARARGDECL(void) Error( const char *szString, ... )
+void __cdecl Error( const char *szString, ... )
 {
     va_list( Arg );
     va_start( Arg, szString );

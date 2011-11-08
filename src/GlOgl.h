@@ -266,8 +266,8 @@ extern GLIDEERRORFUNCTION   ExternErrorFunction;
 #endif
 
 // Genral Prototypes
-VARARGDECL(void) GlideMsg( const char *szString, ... );
-VARARGDECL(void) Error( const char *szString, ... );
+void __cdecl GlideMsg( const char *szString, ... );
+void __cdecl Error( const char *szString, ... );
 void GLErro( const char *Funcao );
 void ConvertColor4B( GrColor_t GlideColor, unsigned int &C );
 void ConvertColorB( GrColor_t GlideColor, unsigned char &R, unsigned char &G, unsigned char &B, unsigned char &A );
