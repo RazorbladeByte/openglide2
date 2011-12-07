@@ -69,41 +69,41 @@ void GLErro( const char *Funcao )
     }
 }
 
-void ConvertColorB( GrColor_t GlideColor, unsigned char &R, unsigned char &G, unsigned char &B, unsigned char &A )
+void ConvertColorB( GrColor_t GlideColor, uint8_t &R, uint8_t &G, uint8_t &B, uint8_t &A )
 {
     switch ( Glide.State.ColorFormat )
     {
     case GR_COLORFORMAT_ARGB:   //0xAARRGGBB
-        A = (unsigned char)( ( GlideColor & 0xFF000000 ) >> 24 );
-        R = (unsigned char)( ( GlideColor & 0x00FF0000 ) >> 16 );
-        G = (unsigned char)( ( GlideColor & 0x0000FF00 ) >>  8 );
-        B = (unsigned char)( ( GlideColor & 0x000000FF )       );
+        A = (uint8_t)( ( GlideColor & 0xFF000000 ) >> 24 );
+        R = (uint8_t)( ( GlideColor & 0x00FF0000 ) >> 16 );
+        G = (uint8_t)( ( GlideColor & 0x0000FF00 ) >>  8 );
+        B = (uint8_t)( ( GlideColor & 0x000000FF )       );
         break;
 
     case GR_COLORFORMAT_ABGR:   //0xAABBGGRR
-        A = (unsigned char)( ( GlideColor & 0xFF000000 ) >> 24 );
-        B = (unsigned char)( ( GlideColor & 0x00FF0000 ) >> 16 );
-        G = (unsigned char)( ( GlideColor & 0x0000FF00 ) >>  8 );
-        R = (unsigned char)( ( GlideColor & 0x000000FF )       );
+        A = (uint8_t)( ( GlideColor & 0xFF000000 ) >> 24 );
+        B = (uint8_t)( ( GlideColor & 0x00FF0000 ) >> 16 );
+        G = (uint8_t)( ( GlideColor & 0x0000FF00 ) >>  8 );
+        R = (uint8_t)( ( GlideColor & 0x000000FF )       );
         break;
 
     case GR_COLORFORMAT_RGBA:   //0xRRGGBBAA
-        R = (unsigned char)( ( GlideColor & 0xFF000000 ) >> 24 );
-        G = (unsigned char)( ( GlideColor & 0x00FF0000 ) >> 16 );
-        B = (unsigned char)( ( GlideColor & 0x0000FF00 ) >>  8 );
-        A = (unsigned char)( ( GlideColor & 0x000000FF )       );
+        R = (uint8_t)( ( GlideColor & 0xFF000000 ) >> 24 );
+        G = (uint8_t)( ( GlideColor & 0x00FF0000 ) >> 16 );
+        B = (uint8_t)( ( GlideColor & 0x0000FF00 ) >>  8 );
+        A = (uint8_t)( ( GlideColor & 0x000000FF )       );
         break;
 
     case GR_COLORFORMAT_BGRA:   //0xBBGGRRAA
-        B = (unsigned char)( ( GlideColor & 0xFF000000 ) >> 24 );
-        G = (unsigned char)( ( GlideColor & 0x00FF0000 ) >> 16 );
-        R = (unsigned char)( ( GlideColor & 0x0000FF00 ) >>  8 );
-        A = (unsigned char)( ( GlideColor & 0x000000FF )       );
+        B = (uint8_t)( ( GlideColor & 0xFF000000 ) >> 24 );
+        G = (uint8_t)( ( GlideColor & 0x00FF0000 ) >> 16 );
+        R = (uint8_t)( ( GlideColor & 0x0000FF00 ) >>  8 );
+        A = (uint8_t)( ( GlideColor & 0x000000FF )       );
         break;
     }
 }
 
-void ConvertColor4B( GrColor_t GlideColor, unsigned int &C )
+void ConvertColor4B( GrColor_t GlideColor, uint32_t &C )
 {
     switch ( Glide.State.ColorFormat )
     {
@@ -191,7 +191,7 @@ void ConvertColorF( GrColor_t GlideColor, float &R, float &G, float &B, float &A
 }
 
 //*************************************************
-unsigned int GetTexSize( const int Lod, const int aspectRatio, const int format )
+uint32_t GetTexSize( const int Lod, const int aspectRatio, const int format )
 {
     /*
     ** If the format is one of these:
@@ -334,7 +334,7 @@ void GetOptions( void )
 }
 
 
-FX_ENTRY void FX_CALL setConfig(unsigned int flags)
+FX_ENTRY void FX_CALL setConfig(uint32_t flags)
 {
     UserConfig.EnableMipMaps = ((flags & WRAPPER_FLAG_MIPMAPS) != 0);
 }
@@ -416,7 +416,7 @@ bool GenerateErrorFile( void )
 // Detect if Processor has MMX Instructions
 int DetectMMX( void )
 {
-    unsigned int Result;
+    uint32_t Result;
 
     #ifdef __GNUC__
         asm ("push %%ebx;"
@@ -449,7 +449,7 @@ int DetectMMX( void )
 
 // Copy Blocks of Memory Using MMX
 
-void MMX_memcpy( void *Dst, void *Src, unsigned int NumberOfBytes )
+void MMX_memcpy( void *Dst, void *Src, uint32_t NumberOfBytes )
 {
   if(DetectMMX != 0)
   {
@@ -462,7 +462,7 @@ void MMX_memcpy( void *Dst, void *Src, unsigned int NumberOfBytes )
          "subl  $8, %0;"
          "jae   MMXCopyMemory_copying;"
          : /* No outputs */
-         : "r" ((unsigned int)NumberOfBytes), "r" (Src), "r" (Dst) /* Inputs */
+         : "r" ((uint32_t)NumberOfBytes), "r" (Src), "r" (Dst) /* Inputs */
          : "%mm0", "memory" /* Clobbers */
         );
     #else

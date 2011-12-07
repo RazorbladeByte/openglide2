@@ -10,7 +10,7 @@
 #include "GlOgl.h"
 
 // extern variables and functions
-unsigned int GetTexSize( const int Lod, const int aspectRatio, const int format );
+uint32_t GetTexSize( const int Lod, const int aspectRatio, const int format );
 
 // prototypes
 int Read3dfHeader( const char *filename, Gu3dfInfo *data );
@@ -44,28 +44,28 @@ gu3dfGetInfo( const char *filename, Gu3dfInfo *info )
 }
 
 
-static unsigned int ReadDataLong( FILE *fp )
+static uint32_t ReadDataLong( FILE *fp )
 {
-    unsigned int     data;
-    unsigned char    byte[4];
+    uint32_t     data;
+    uint8_t    byte[4];
 
     fread( byte, 4, 1, fp );
-    data = (((unsigned int) byte[ 0 ]) << 24) |
-           (((unsigned int) byte[ 1 ]) << 16) |
-           (((unsigned int) byte[ 2 ]) <<  8) |
-            ((unsigned int) byte[ 3 ]);
+    data = (((uint32_t) byte[ 0 ]) << 24) |
+           (((uint32_t) byte[ 1 ]) << 16) |
+           (((uint32_t) byte[ 2 ]) <<  8) |
+            ((uint32_t) byte[ 3 ]);
 
     return data;
 }
 
-static unsigned int ReadDataShort( FILE *fp )
+static uint32_t ReadDataShort( FILE *fp )
 {
-    unsigned int     data;
-    unsigned char    byte[2];
+    uint32_t   data;
+    uint8_t    byte[2];
 
     fread( byte, 2, 1, fp );
-    data = (((unsigned int) byte[ 0 ]) << 8) |
-            ((unsigned int) byte[ 1 ]);
+    data = (((uint32_t) byte[ 0 ]) << 8) |
+            ((uint32_t) byte[ 1 ]);
 
     return data;
 }
@@ -107,28 +107,28 @@ gu3dfLoad( const char *filename, Gu3dfInfo *data )
     {
         int   i;
         int   pi;
-        unsigned int pack;
+        uint32_t pack;
 
         GuNccTable *ncc = &(data->table.nccTable);
 
         for ( i = 0; i < 16; i++ )
         {
-            ncc->yRGB[i] = (unsigned char) ReadDataShort( file3df );
+            ncc->yRGB[i] = (uint8_t) ReadDataShort( file3df );
         }
 
         for ( i = 0; i < 4; i++ )
         {
             /* Masking with 0x1ff is strange but correct apparently */
-            ncc->iRGB[i][0] = (short) ( ReadDataShort( file3df ) & 0x1ff );
-            ncc->iRGB[i][1] = (short) ( ReadDataShort( file3df ) & 0x1ff );
-            ncc->iRGB[i][2] = (short) ( ReadDataShort( file3df ) & 0x1ff );
+            ncc->iRGB[i][0] = (int16_t) ( ReadDataShort( file3df ) & 0x1ff );
+            ncc->iRGB[i][1] = (int16_t) ( ReadDataShort( file3df ) & 0x1ff );
+            ncc->iRGB[i][2] = (int16_t) ( ReadDataShort( file3df ) & 0x1ff );
         }
 
         for ( i = 0; i < 4; i++ )
         {
-            ncc->qRGB[i][0] = (short) ( ReadDataShort( file3df ) & 0x1ff );
-            ncc->qRGB[i][1] = (short) ( ReadDataShort( file3df ) & 0x1ff );
-            ncc->qRGB[i][2] = (short) ( ReadDataShort( file3df ) & 0x1ff );
+            ncc->qRGB[i][0] = (int16_t) ( ReadDataShort( file3df ) & 0x1ff );
+            ncc->qRGB[i][1] = (int16_t) ( ReadDataShort( file3df ) & 0x1ff );
+            ncc->qRGB[i][2] = (int16_t) ( ReadDataShort( file3df ) & 0x1ff );
         }
 
         pi = 0;
@@ -172,18 +172,18 @@ gu3dfLoad( const char *filename, Gu3dfInfo *data )
     case GR_TEXFMT_ALPHA_INTENSITY_88:
     case GR_TEXFMT_AP_88:
         {
-            unsigned short *d = (unsigned short *) (data->data);
+            uint16_t *d = (uint16_t *) (data->data);
             int i;
 
             for ( i = data->mem_required; i > 0; i -= 2 )
             {
-                *d++ = (unsigned short) ReadDataShort( file3df );
+                *d++ = (uint16_t) ReadDataShort( file3df );
             }
         }
         break;
         
     default:
-        fread( data->data, sizeof( unsigned char ), data->mem_required, file3df );
+        fread( data->data, sizeof( uint8_t ), data->mem_required, file3df );
         break;
     }
 

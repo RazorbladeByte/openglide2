@@ -571,12 +571,12 @@ void RenderAddTriangle( const GrVertex *a, const GrVertex *b, const GrVertex *c,
         else 
         if ( InternalConfig.PrecisionFix )
         {   // Fix precision to 16 integer bits.
-            unsigned short w;
-            w      = (unsigned short)((a->oow / D1OVER65535) + 0.5f);
+            uint16_t w;
+            w      = (uint16_t)((a->oow / D1OVER65535) + 0.5f);
             pV->az = (float)w * D1OVER65535;
-            w      = (unsigned short)((b->oow / D1OVER65535) + 0.5f);
+            w      = (uint16_t)((b->oow / D1OVER65535) + 0.5f);
             pV->bz = (float)w * D1OVER65535;
-            w      = (unsigned short)((c->oow / D1OVER65535) + 0.5f);
+            w      = (uint16_t)((c->oow / D1OVER65535) + 0.5f);
             pV->cz = (float)w * D1OVER65535;
         }
         else
@@ -632,9 +632,9 @@ void RenderAddTriangle( const GrVertex *a, const GrVertex *b, const GrVertex *c,
         if ( Glide.State.FogMode == GR_FOG_WITH_TABLE )
 //        if ( Glide.State.FogMode & GR_FOG_WITH_TABLE )
         {
-            pF->af = (float)OpenGL.FogTable[ (unsigned short)(1.0f / a->oow) ] * D1OVER255;
-            pF->bf = (float)OpenGL.FogTable[ (unsigned short)(1.0f / b->oow) ] * D1OVER255;
-            pF->cf = (float)OpenGL.FogTable[ (unsigned short)(1.0f / c->oow) ] * D1OVER255;
+            pF->af = (float)OpenGL.FogTable[ (uint16_t)(1.0f / a->oow) ] * D1OVER255;
+            pF->bf = (float)OpenGL.FogTable[ (uint16_t)(1.0f / b->oow) ] * D1OVER255;
+            pF->cf = (float)OpenGL.FogTable[ (uint16_t)(1.0f / c->oow) ] * D1OVER255;
         }
         else
         {
@@ -1058,10 +1058,10 @@ void RenderAddLine( const GrVertex *a, const GrVertex *b, bool unsnap )
         else 
         if ( InternalConfig.PrecisionFix )
         {   // Fix precision to 16 integer bits.
-            unsigned short w;
-            w      = (unsigned short)((a->oow / D1OVER65535) + 0.5f);
+            uint16_t w;
+            w      = (uint16_t)((a->oow / D1OVER65535) + 0.5f);
             pV->az = (float)w * D1OVER65535;
-            w      = (unsigned short)((b->oow / D1OVER65535) + 0.5f);
+            w      = (uint16_t)((b->oow / D1OVER65535) + 0.5f);
             pV->bz = (float)w / D1OVER65535;
         }
         else
@@ -1103,8 +1103,8 @@ void RenderAddLine( const GrVertex *a, const GrVertex *b, bool unsnap )
 
     if ( InternalConfig.FogEnable )
     {
-        pF->af = (float)OpenGL.FogTable[ (unsigned short)(1.0f / a->oow) ] * D1OVER255;
-        pF->bf = (float)OpenGL.FogTable[ (unsigned short)(1.0f / b->oow) ] * D1OVER255;
+        pF->af = (float)OpenGL.FogTable[ (uint16_t)(1.0f / a->oow) ] * D1OVER255;
+        pF->bf = (float)OpenGL.FogTable[ (uint16_t)(1.0f / b->oow) ] * D1OVER255;
 
     #ifdef OGL_DEBUG
         DEBUG_MIN_MAX( pF->af, OGLRender.MaxF, OGLRender.MinF );
@@ -1456,7 +1456,7 @@ void RenderAddPoint( const GrVertex *a, bool unsnap )
         else 
         if ( InternalConfig.PrecisionFix )
         {   // Fix precision to 16 integer bits.
-            unsigned short w = (unsigned short)((a->oow / D1OVER65535) + 0.5f);
+            uint16_t w = (uint16_t)((a->oow / D1OVER65535) + 0.5f);
             pV->az  = (float)w * D1OVER65535;
         }
         else
@@ -1490,7 +1490,7 @@ void RenderAddPoint( const GrVertex *a, bool unsnap )
 
     if( InternalConfig.FogEnable )
     {
-        pF->af = (float)OpenGL.FogTable[ (unsigned short)(1.0f / a->oow) ] * D1OVER255;
+        pF->af = (float)OpenGL.FogTable[ (uint16_t)(1.0f / a->oow) ] * D1OVER255;
 
     #ifdef OGL_DEBUG
         DEBUG_MIN_MAX( pF->af, OGLRender.MaxF, OGLRender.MinF );

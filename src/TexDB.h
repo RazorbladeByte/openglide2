@@ -15,29 +15,29 @@ public:
 
     struct Record
     {
-        unsigned int startAddress;
-        unsigned int endAddress;
+        uint32_t     startAddress;
+        uint32_t     endAddress;
         GrTexInfo    info;
-        unsigned int hash;
+        uint32_t     hash;
         GLuint       texNum;
         GLuint       tex2Num;
         Record       *next;
 
         Record( bool two_tex );
         ~Record( void );
-        bool Match( unsigned int stt, GrTexInfo *inf, unsigned int h );
+        bool Match( uint32_t stt, GrTexInfo *inf, uint32_t h );
     };
 
-    void Add( unsigned int startAddress, unsigned int endAddress, GrTexInfo *info, 
-		      unsigned int hash, GLuint *pTexNum, GLuint *pTex2Num );
-    void WipeRange( unsigned int startAddress, unsigned int endAddress, unsigned int hash );
-    GrTexInfo * Find( unsigned int startAddress, GrTexInfo *info, unsigned int hash, 
+    void Add( uint32_t startAddress, uint32_t endAddress, GrTexInfo *info, 
+		      uint32_t hash, GLuint *pTexNum, GLuint *pTex2Num );
+    void WipeRange( uint32_t startAddress, uint32_t endAddress, uint32_t hash );
+    GrTexInfo * Find( uint32_t startAddress, GrTexInfo *info, uint32_t hash, 
                       GLuint *pTexNum, GLuint *pTex2Num, bool *pal_change );
-    TexDB( unsigned int MemorySize );
+    TexDB( uint32_t MemorySize );
     virtual ~TexDB( void );
 
 private:
-    unsigned int numberOfTexSections;
+    uint32_t numberOfTexSections;
     Record ** m_first;
 };
 

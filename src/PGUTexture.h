@@ -11,7 +11,7 @@
 class PGUTexture  
 {
 public:
-    unsigned int MemQueryAvail( GrChipID_t tmu );
+    uint32_t MemQueryAvail( GrChipID_t tmu );
     GrMipMapId_t GetCurrentMipMap( GrChipID_t tmu );
     FxBool ChangeAttributes( GrMipMapId_t mmid, int width, int height, 
                              GrTextureFormat_t fmt, GrMipMapMode_t mm_mode, 
@@ -25,7 +25,7 @@ public:
     void MemReset( void );
     void DownloadMipMapLevel( GrMipMapId_t mmid, GrLOD_t lod, const void **src );
     void DownloadMipMap( GrMipMapId_t mmid, const void *src, const GuNccTable *table );
-    GrMipMapId_t AllocateMemory( GrChipID_t tmu, unsigned char odd_even_mask, int width, int height, 
+    GrMipMapId_t AllocateMemory( GrChipID_t tmu, uint8_t odd_even_mask, int width, int height, 
                                  GrTextureFormat_t fmt, GrMipMapMode_t mm_mode, 
                                  GrLOD_t smallest_lod, GrLOD_t largest_lod, 
                                  GrAspectRatio_t aspect, GrTextureClampMode_t s_clamp_mode, 
@@ -43,8 +43,8 @@ private:
     enum { MAX_MM = 1024 };
 
     GrMipMapInfo    mm_info[ MAX_MM ];
-    unsigned int    mm_start[ MAX_MM ];
-    unsigned int    m_free_mem;
+    uint32_t    mm_start[ MAX_MM ];
+    uint32_t    m_free_mem;
     GrMipMapId_t    m_free_id;
     GrMipMapId_t    m_current_id;
 };

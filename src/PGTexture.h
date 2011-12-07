@@ -14,27 +14,27 @@ class PGTexture
     struct TexValues
     {
         GrLOD_t      lod;
-        unsigned int width;
-        unsigned int height;
-        unsigned int nPixels;
+        uint32_t width;
+        uint32_t height;
+        uint32_t nPixels;
     };
 
 public:
 	void NCCTable( GrNCCTable_t tab );
 
-    static unsigned int LodOffset( unsigned int evenOdd, GrTexInfo *info );
-    static unsigned int MipMapMemRequired( GrLOD_t lod, GrAspectRatio_t aspectRatio, 
+    static uint32_t LodOffset( uint32_t evenOdd, GrTexInfo *info );
+    static uint32_t MipMapMemRequired( GrLOD_t lod, GrAspectRatio_t aspectRatio, 
                                            GrTextureFormat_t format );
     void ChromakeyMode( GrChromakeyMode_t mode );
     void ChromakeyValue( GrColor_t value );
     void GetAspect( float *hAspect, float *wAspect );
     void Clear( void );
-    static unsigned int TextureMemRequired( unsigned int evenOdd, GrTexInfo *info );
+    static uint32_t TextureMemRequired( uint32_t evenOdd, GrTexInfo *info );
     bool MakeReady( void );
-    void DownloadTable( GrTexTable_t type, unsigned int *data, int first, int count );
-    void Source( unsigned int startAddress, unsigned int evenOdd, GrTexInfo *info );
-    void DownloadMipMap( unsigned int startAddress, unsigned int evenOdd, GrTexInfo *info );
-    unsigned int GetMemorySize( void );
+    void DownloadTable( GrTexTable_t type, uint32_t *data, int first, int count );
+    void Source( uint32_t startAddress, uint32_t evenOdd, GrTexInfo *info );
+    void DownloadMipMap( uint32_t startAddress, uint32_t evenOdd, GrTexInfo *info );
+    uint32_t GetMemorySize( void );
 
     PGTexture( int mem_size );
     virtual ~PGTexture();
@@ -60,23 +60,23 @@ private:
     void ApplyKeyToPalette( void );
     void GetTexValues( TexValues *tval );
 
-    unsigned int    m_tex_memory_size;
+    uint32_t    m_tex_memory_size;
     bool            m_palette_dirty;
-    unsigned int    m_palette_hash;
+    uint32_t    m_palette_hash;
     TexDB *         m_db;
     GrChromakeyMode_t m_chromakey_mode;
-    unsigned int    m_chromakey_value_8888;
-    unsigned short  m_chromakey_value_565;
+    uint32_t    m_chromakey_value_8888;
+    uint16_t  m_chromakey_value_565;
     float           m_wAspect;
     float           m_hAspect;
 
-    unsigned int    m_tex_temp[ 256 * 256 ];
+    uint32_t    m_tex_temp[ 256 * 256 ];
     bool            m_valid;
-    unsigned char * m_memory;
-    unsigned int    m_startAddress;
-    unsigned int    m_evenOdd;
+    uint8_t * m_memory;
+    uint32_t    m_startAddress;
+    uint32_t    m_evenOdd;
     GrTexInfo       m_info;
-    unsigned int    m_palette[ 256 ];
+    uint32_t    m_palette[ 256 ];
     GrNCCTable_t    m_ncc_select;
     GuNccTable      m_ncc[2];
 };

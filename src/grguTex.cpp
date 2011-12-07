@@ -17,37 +17,37 @@
 //*************************************************
 //* Return the lowest start address for texture downloads
 //*************************************************
-FX_ENTRY unsigned int FX_CALL
+FX_ENTRY uint32_t FX_CALL
 grTexMinAddress( GrChipID_t tmu )
 {
 #ifdef OGL_DONE
     GlideMsg( "grTexMinAddress( %d ) = 0\n", tmu );
 #endif
 
-    return (unsigned int) 0;
+    return (uint32_t) 0;
 }
 
 //*************************************************
 //* Return the highest start address for texture downloads
 //*************************************************
-FX_ENTRY unsigned int FX_CALL
+FX_ENTRY uint32_t FX_CALL
 grTexMaxAddress( GrChipID_t tmu )
 {
 #ifdef OGL_DONE
     GlideMsg( "grTexMaxAddress( %d ) = %lu\n", tmu, Glide.TexMemoryMaxPosition );
 #endif
 
-    return (unsigned int)( Glide.TexMemoryMaxPosition );
+    return (uint32_t)( Glide.TexMemoryMaxPosition );
 }
 
 //*************************************************
 //* Specify the current texture source for rendering
 //*************************************************
 FX_ENTRY void FX_CALL
-grTexSource( GrChipID_t   tmu,
-             unsigned int startAddress,
-             unsigned int evenOdd,
-             GrTexInfo    *info )
+grTexSource( GrChipID_t  tmu,
+             uint32_t    startAddress,
+             uint32_t    evenOdd,
+             GrTexInfo   *info )
 {
 #ifdef OGL_DONE
     GlideMsg( "grTexSource( %d, %d, %d, --- )\n", tmu, startAddress, evenOdd );
@@ -69,8 +69,8 @@ grTexSource( GrChipID_t   tmu,
 //*************************************************
 //* Return the texture memory consumed by a texture
 //*************************************************
-FX_ENTRY unsigned int FX_CALL
-grTexTextureMemRequired( unsigned int dwEvenOdd, GrTexInfo *texInfo )
+FX_ENTRY uint32_t FX_CALL
+grTexTextureMemRequired( uint32_t dwEvenOdd, GrTexInfo *texInfo )
 {
 #ifdef OGL_DONE
     GlideMsg( "grTexTextureMemRequired( %u, --- )\n", dwEvenOdd );
@@ -83,10 +83,10 @@ grTexTextureMemRequired( unsigned int dwEvenOdd, GrTexInfo *texInfo )
 //* Return the texture memory consumed by a texture
 //*************************************************
 FX_ENTRY void FX_CALL
-grTexDownloadMipMap( GrChipID_t   tmu,
-                     unsigned int startAddress,
-                     unsigned int evenOdd,
-                     GrTexInfo    *info )
+grTexDownloadMipMap( GrChipID_t  tmu,
+                     uint32_t    startAddress,
+                     uint32_t    evenOdd,
+                     GrTexInfo   *info )
 {
 #ifdef OGL_PARTDONE
     GlideMsg( "grTexDownloadMipMap( %d, %u, %u, --- )\n", tmu, 
@@ -107,12 +107,12 @@ grTexDownloadMipMap( GrChipID_t   tmu,
 //*************************************************
 FX_ENTRY void FX_CALL
 grTexDownloadMipMapLevel( GrChipID_t        tmu,
-                          unsigned int      startAddress,
+                          uint32_t          startAddress,
                           GrLOD_t           thisLod,
                           GrLOD_t           largeLod,
                           GrAspectRatio_t   aspectRatio,
                           GrTextureFormat_t format,
-                          unsigned int      evenOdd,
+                          uint32_t          evenOdd,
                           void              *data )
 {
 #ifdef OGL_PARTDONE
@@ -140,12 +140,12 @@ grTexDownloadMipMapLevel( GrChipID_t        tmu,
 //*************************************************
 FX_ENTRY void FX_CALL
 grTexDownloadMipMapLevelPartial( GrChipID_t        tmu,
-                                 unsigned int      startAddress,
+                                 uint32_t          startAddress,
                                  GrLOD_t           thisLod,
                                  GrLOD_t           largeLod,
                                  GrAspectRatio_t   aspectRatio,
                                  GrTextureFormat_t format,
-                                 unsigned int      evenOdd,
+                                 uint32_t          evenOdd,
                                  void              *data,
                                  int               start,
                                  int               end )
@@ -309,7 +309,7 @@ grTexMipMapMode( GrChipID_t     tmu,
 //*************************************************
 //* Returns the memory occupied by a texture
 //*************************************************
-FX_ENTRY unsigned int FX_CALL
+FX_ENTRY uint32_t FX_CALL
 grTexCalcMemRequired( GrLOD_t lodmin, GrLOD_t lodmax,
                       GrAspectRatio_t aspect, GrTextureFormat_t fmt )
 {
@@ -349,7 +349,7 @@ grTexDownloadTablePartial( GrChipID_t   tmu,
 
     RenderDrawTriangles( );
 
-    Textures->DownloadTable( type, (unsigned int*)data, start, end + 1 - start );
+    Textures->DownloadTable( type, (uint32_t*)data, start, end + 1 - start );
 }
 
 //*************************************************
@@ -371,7 +371,7 @@ grTexDownloadTable( GrChipID_t   tmu,
 
     RenderDrawTriangles( );
 
-    Textures->DownloadTable( type, (unsigned int*)data, 0, 256 );
+    Textures->DownloadTable( type, (uint32_t*)data, 0, 256 );
 }
 
 //*************************************************
@@ -629,7 +629,7 @@ grTexNCCTable( GrChipID_t tmu, GrNCCTable_t NCCTable )
 FX_ENTRY void FX_CALL 
 grTexDetailControl( GrChipID_t tmu,
                     int lod_bias,
-                    unsigned char detail_scale,
+                    uint8_t detail_scale,
                     float detail_max )
 {
 #ifdef OGL_NOTDONE
@@ -657,8 +657,8 @@ grTexMultibase( GrChipID_t tmu,
 FX_ENTRY void FX_CALL
 grTexMultibaseAddress( GrChipID_t       tmu,
                        GrTexBaseRange_t range,
-                       unsigned int     startAddress,
-                       unsigned int     evenOdd,
+                       uint32_t     startAddress,
+                       uint32_t     evenOdd,
                        GrTexInfo        *info )
 {
 #ifdef OGL_NOTDONE
@@ -729,7 +729,7 @@ grTexCombineFunction( GrChipID_t tmu, GrTextureCombineFnc_t func )
 //*************************************************
 //* Return the amount of unallocated texture memory on a Texture Mapping Unit
 //*************************************************
-FX_ENTRY unsigned int FX_CALL 
+FX_ENTRY uint32_t FX_CALL 
 guTexMemQueryAvail( GrChipID_t tmu )
 {
 #ifdef OGL_PARTDONE
@@ -893,7 +893,7 @@ guTexDownloadMipMap( GrMipMapId_t mmid, const void *src, const GuNccTable *table
 //*************************************************
 FX_ENTRY GrMipMapId_t FX_CALL 
 guTexAllocateMemory( GrChipID_t tmu,
-                     unsigned char odd_even_mask,
+                     uint8_t odd_even_mask,
                      int width, int height,
                      GrTextureFormat_t fmt,
                      GrMipMapMode_t mm_mode,
@@ -937,7 +937,7 @@ guTexSource( GrMipMapId_t id )
 }
 
 //*************************************************
-FX_ENTRY unsigned short * FX_CALL
+FX_ENTRY uint16_t * FX_CALL
 guTexCreateColorMipMap( void )
 {
 #ifdef OGL_NOTDONE

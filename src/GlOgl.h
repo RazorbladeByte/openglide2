@@ -82,17 +82,17 @@ struct BufferStruct
     GrLfbWriteMode_t        WriteMode;
     GrBuffer_t              Buffer;
     FxBool                  PixelPipeline;
-    unsigned short          *Address;
+    uint16_t          *Address;
 };
 
 struct TexSourceStruct
 {
-    unsigned int StartAddress;
-    unsigned int EvenOdd;
+    uint32_t StartAddress;
+    uint32_t EvenOdd;
     GrTexInfo    Info;
 };
 
-typedef unsigned int OGLByteColor;
+typedef uint32_t OGLByteColor;
 
 struct GlideState
 {
@@ -100,7 +100,7 @@ struct GlideState
     GrDepthBufferMode_t     DepthBufferMode;
     GrCmpFnc_t              DepthFunction;
     FxBool                  DepthBufferWritting;
-    short                   DepthBiasLevel;
+    int16_t                 DepthBiasLevel;
     GrDitherMode_t          DitherMode;
     GrColor_t               ChromakeyValue;
     GrChromakeyMode_t       ChromaKeyMode;
@@ -140,12 +140,12 @@ struct GlideState
     GrAlphaBlendFnc_t       AlphaBlendRgbDf;
     GrAlphaBlendFnc_t       AlphaBlendAlphaSf;
     GrAlphaBlendFnc_t       AlphaBlendAlphaDf;
-    unsigned int            ClipMinX;
-    unsigned int            ClipMaxX;
-    unsigned int            ClipMinY;
-    unsigned int            ClipMaxY;
+    uint32_t                ClipMinX;
+    uint32_t                ClipMaxX;
+    uint32_t                ClipMinY;
+    uint32_t                ClipMaxY;
     GrColorFormat_t         ColorFormat;
-    unsigned int            STWHint;
+    uint32_t                STWHint;
     FxBool                  VRetrace;
 };
 
@@ -153,14 +153,14 @@ struct GlideStruct
 {
     int                     ActiveVoodoo;
     // Frame Buffer Stuff
-    unsigned int            WindowWidth;
-    unsigned int            WindowHeight;
-    unsigned int            WindowTotalPixels; 
+    uint32_t            WindowWidth;
+    uint32_t            WindowHeight;
+    uint32_t            WindowTotalPixels; 
     int                     NumBuffers;
     int                     AuxBuffers;
     // States and Constants
-    unsigned char           FogTable[ GR_FOG_TABLE_SIZE + 1 ];
-    unsigned int            TexMemoryMaxPosition;
+    uint8_t           FogTable[ GR_FOG_TABLE_SIZE + 1 ];
+    uint32_t            TexMemoryMaxPosition;
     bool                    CLocal;
     bool                    COther;
     bool                    ALocal;
@@ -169,7 +169,7 @@ struct GlideStruct
     BufferStruct            SrcBuffer;
     BufferStruct            DstBuffer;
     GLuint                  LFBTexture;
-    unsigned int            LFBTextureSize;
+    uint32_t            LFBTextureSize;
     int                     TextureMemory;
 };
 
@@ -202,7 +202,7 @@ struct OpenGLStruct
     GLfloat                 ZNear;
     GLfloat                 ZFar;
     GLfloat                 FogColor[ 4 ];
-    unsigned char           FogTable[ OPENGLFOGTABLESIZE ];
+    uint8_t           FogTable[ OPENGLFOGTABLESIZE ];
     OGLByteColor            ChromaColor;
     bool                    Fog;
     bool                    Texture;
@@ -258,9 +258,9 @@ extern GLIDEERRORFUNCTION   ExternErrorFunction;
 
 #ifdef OGL_DEBUG
     // Profiling variables
-    extern long long        InitialTick;
-    extern long long        FinalTick;
-    extern unsigned int     Frame;
+    extern int64_t        InitialTick;
+    extern int64_t        FinalTick;
+    extern uint32_t     Frame;
     extern double           Fps;
     extern double           FpsAux;
 #endif
@@ -269,19 +269,19 @@ extern GLIDEERRORFUNCTION   ExternErrorFunction;
 void __cdecl GlideMsg( const char *szString, ... );
 void __cdecl Error( const char *szString, ... );
 void GLErro( const char *Funcao );
-void ConvertColor4B( GrColor_t GlideColor, unsigned int &C );
-void ConvertColorB( GrColor_t GlideColor, unsigned char &R, unsigned char &G, unsigned char &B, unsigned char &A );
+void ConvertColor4B( GrColor_t GlideColor, uint32_t &C );
+void ConvertColorB( GrColor_t GlideColor, uint8_t &R, uint8_t &G, uint8_t &B, uint8_t &A );
 void ConvertColorF( GrColor_t GlideColor, float &R, float &G, float &B, float &A );
 GrColor_t ConvertConstantColor( float R, float G, float B, float A );
 bool GenerateErrorFile( void );
 bool ClearAndGenerateLogFile( void );
 void CloseLogFile( void );
-bool InitWindow( unsigned int hWnd );
+bool InitWindow( uint32_t hWnd );
 void InitOpenGL( void );
 void GetOptions( void );
 void InitMainVariables( void );
 
-void MMX_memcpy( void *Dst, void *Src, unsigned int NumberOfBytes );
+void MMX_memcpy( void *Dst, void *Src, uint32_t NumberOfBytes );
 
 int DetectMMX();
 

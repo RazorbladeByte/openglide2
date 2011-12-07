@@ -17,9 +17,9 @@ static HGLRC hRC;
 static HWND  hWND;
 static struct
 {
-    unsigned short red[ 256 ];
-    unsigned short green[ 256 ];
-    unsigned short blue[ 256 ];
+    uint16_t red[ 256 ];
+    uint16_t green[ 256 ];
+    uint16_t blue[ 256 ];
 } old_ramp;
 
 static BOOL ramp_stored  = false;
@@ -28,7 +28,7 @@ static BOOL mode_changed = false;
 static BOOL wasInit      = false;
 #endif
 
-bool InitialiseOpenGLWindow(unsigned int wnd, int x, int y, int width, int height)
+bool InitialiseOpenGLWindow(uint32_t wnd, int x, int y, int width, int height)
 {
     #ifdef USE_SDL
     bool FullScreen = UserConfig.InitFullScreen;
@@ -98,7 +98,7 @@ bool InitialiseOpenGLWindow(unsigned int wnd, int x, int y, int width, int heigh
     #else
     PIXELFORMATDESCRIPTOR   pfd;
     int                     PixFormat;
-    unsigned int            BitsPerPixel;
+    uint32_t            BitsPerPixel;
     HWND                    hwnd = (HWND) wnd;
 
     if( hwnd == NULL )
@@ -258,7 +258,7 @@ bool SetScreenMode(int &xsize, int &ysize)
 	return true;
     #else
     HDC          hdc;
-    unsigned int bits_per_pixel;
+    uint32_t bits_per_pixel;
     bool         found;
     DEVMODE      DevMode;
 
@@ -273,8 +273,8 @@ bool SetScreenMode(int &xsize, int &ysize)
           !found && EnumDisplaySettings( NULL, i, &DevMode ) != false; 
           i++ )
     {
-        if ( ( DevMode.dmPelsWidth  == (unsigned int)xsize ) && 
-             ( DevMode.dmPelsHeight == (unsigned int)ysize ) && 
+        if ( ( DevMode.dmPelsWidth  == (uint32_t)xsize ) && 
+             ( DevMode.dmPelsHeight == (uint32_t)ysize ) && 
              ( DevMode.dmBitsPerPel == bits_per_pixel ) )
         {
             found = true;
@@ -320,13 +320,13 @@ void ReportError(const char *message)
 #pragma optimize( "", off )
 float ClockFrequency( void )
 {
-    long long i64_perf_start, 
-              i64_perf_freq, 
-              i64_perf_end,
-              i64_clock_start,
-              i64_clock_end;
-    double    d_loop_period, 
-              d_clock_freq;
+    int64_t i64_perf_start, 
+            i64_perf_freq, 
+            i64_perf_end,
+            i64_clock_start,
+            i64_clock_end;
+    double  d_loop_period, 
+            d_clock_freq;
 
     QueryPerformanceFrequency( (LARGE_INTEGER*)&i64_perf_freq );
 

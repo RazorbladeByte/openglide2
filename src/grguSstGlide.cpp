@@ -8,13 +8,13 @@
 #include "PGTexture.h"
 #include "OGLTables.h"
 
-static bool InterpretScreenResolution(GrScreenResolution_t eResolution, unsigned int &width,
-	                                  unsigned int &height)
+static bool InterpretScreenResolution(GrScreenResolution_t eResolution, uint32_t &width,
+	                                  uint32_t &height)
 {
     if ( eResolution > GR_RESOLUTION_400x300 )
         return false;
 
-    static const unsigned int windowDimensions[16][2] =
+    static const uint32_t windowDimensions[16][2] =
     {
         {  320,  200 }, // GR_RESOLUTION_320x200
         {  320,  240 }, // GR_RESOLUTION_320x240
@@ -61,8 +61,8 @@ static bool InterpretScreenRefresh(GrScreenRefresh_t eRefresh, GLuint &refresh)
     return true;
 }
 
-static unsigned int int_log2 (unsigned int val) {
-    unsigned int log = 0;
+static uint32_t int_log2 (uint32_t val) {
+    uint32_t log = 0;
     while ((val >>= 1) != 0)
         log++;
     return log;
@@ -123,7 +123,7 @@ grGlideInit( void )
         Error( "Cannot allocate enough memory for Texture Buffer in User setting, using default" );
     }
 
-    Glide.TexMemoryMaxPosition   = (unsigned int)Glide.TextureMemory;
+    Glide.TexMemoryMaxPosition   = (uint32_t)Glide.TextureMemory;
 }
 
 //*************************************************
@@ -229,7 +229,7 @@ grSstQueryBoards( GrHwConfiguration *hwConfig )
 
 //*************************************************
 FX_ENTRY FxBool FX_CALL
-grSstWinOpen(   unsigned int hwnd,
+grSstWinOpen(   uint32_t hwnd,
                 GrScreenResolution_t res,
                 GrScreenRefresh_t ref,
                 GrColorFormat_t cformat,
@@ -282,8 +282,8 @@ grSstWinOpen(   unsigned int hwnd,
     // Initializing Glide and OpenGL
     InitOpenGL( );
 
-    Glide.SrcBuffer.Address = new unsigned short[ OPENGLBUFFERMEMORY * 2 ];
-    Glide.DstBuffer.Address = new unsigned short[ OPENGLBUFFERMEMORY * 2 ];
+    Glide.SrcBuffer.Address = new uint16_t[ OPENGLBUFFERMEMORY * 2 ];
+    Glide.DstBuffer.Address = new uint16_t[ OPENGLBUFFERMEMORY * 2 ];
     Glide.LFBTextureSize = 2 << int_log2(Glide.WindowWidth > Glide.WindowHeight ? (Glide.WindowWidth-1) : (Glide.WindowHeight-1));
 
     glGenTextures( 1, &Glide.LFBTexture );
@@ -305,7 +305,7 @@ grSstWinOpen(   unsigned int hwnd,
     ZeroMemory( Glide.SrcBuffer.Address, OPENGLBUFFERMEMORY * 2 );
 
 #define BLUE_SCREEN     (0x07FF)
-    for( unsigned int i = 0; i < Glide.WindowTotalPixels; i++ )
+    for( uint32_t i = 0; i < Glide.WindowTotalPixels; i++ )
     {
         Glide.DstBuffer.Address[i] = BLUE_SCREEN;
     }
@@ -487,7 +487,7 @@ grSstSelect( int which_sst )
 //*************************************************
 //* Returns the Screen Height
 //*************************************************
-FX_ENTRY unsigned int FX_CALL
+FX_ENTRY uint32_t FX_CALL
 grSstScreenHeight( void )
 {
 #ifdef OGL_DONE
@@ -500,7 +500,7 @@ grSstScreenHeight( void )
 //*************************************************
 //* Returns the Screen Width
 //*************************************************
-FX_ENTRY unsigned int FX_CALL
+FX_ENTRY uint32_t FX_CALL
 grSstScreenWidth( void )
 {
 #ifdef OGL_DONE
@@ -568,7 +568,7 @@ grSstResetPerfStats( void )
 }
 
 //*************************************************
-FX_ENTRY unsigned int FX_CALL 
+FX_ENTRY uint32_t FX_CALL 
 grSstVideoLine( void )
 {
 #ifdef OGL_NOTDONE
@@ -602,7 +602,7 @@ grSstIsBusy( void )
 
 //*************************************************
 FX_ENTRY FxBool FX_CALL
-grSstControl( unsigned int code )
+grSstControl( uint32_t code )
 { 
 #ifdef OGL_NOTDONE
     GlideMsg( "grSstControl( %lu )\n", code ); 
@@ -636,15 +636,15 @@ grSstControlMode( GrControl_t mode )
 //*************************************************
 //* Return the Value of the graphics status register
 //*************************************************
-FX_ENTRY unsigned int FX_CALL 
+FX_ENTRY uint32_t FX_CALL 
 grSstStatus( void )
 {
 #ifdef OGL_PARTDONE
     GlideMsg( "grSstStatus( )\n" );
 #endif
 
-//    unsigned int Status = 0x0FFFF43F;
-    unsigned int Status = 0x0FFFF03F;
+//    uint32_t Status = 0x0FFFF43F;
+    uint32_t Status = 0x0FFFF03F;
     
     // Vertical Retrace
     Status      |= ( ! Glide.State.VRetrace ) << 6;

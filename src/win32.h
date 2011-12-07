@@ -17,6 +17,7 @@
 #include <time.h>
 #include <io.h>
 #include <math.h>
+#include <stdint.h>
 #ifdef USE_SDL
 #include "SDL.h"
 #include "SDL_opengl.h"
@@ -27,7 +28,7 @@
 
 /* Functions for handling display window */
 
-bool InitialiseOpenGLWindow(unsigned int wnd, int x, int y, int width, int height);
+bool InitialiseOpenGLWindow(uint32_t wnd, int x, int y, int width, int height);
 void FinaliseOpenGLWindow( void);
 
 void SetGamma(float value);

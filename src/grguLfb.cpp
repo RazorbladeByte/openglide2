@@ -15,7 +15,7 @@
 #define BLUE_SCREEN     (0x07FF)
 
 // Will need to change this later
-static unsigned int tempBuf[ 2048 * 2048 ];
+static uint32_t tempBuf[ 2048 * 2048 ];
 
 
 //*************************************************
@@ -45,7 +45,7 @@ grLfbLock( GrLock_t dwType,
     }
     else
     {
-        unsigned int j;
+        uint32_t j;
 
         glReadBuffer( dwBuffer == GR_BUFFER_BACKBUFFER
                       ? GL_BACK : GL_FRONT );
@@ -98,7 +98,7 @@ grLfbUnlock( GrLock_t dwType, GrBuffer_t dwBuffer )
             return FXFALSE;
         }
 
-        unsigned int ii,
+        uint32_t ii,
             x,
             y,
             maxx = 0,
@@ -134,8 +134,8 @@ grLfbUnlock( GrLock_t dwType, GrBuffer_t dwBuffer )
         if ( maxx >= minx )
         {
             maxx++; maxy++;
-            unsigned int xsize = maxx - minx;
-            unsigned int ysize = maxy - miny;
+            uint32_t xsize = maxx - minx;
+            uint32_t ysize = maxy - miny;
 
             // Draw a textured quad
             glPushAttrib( GL_COLOR_BUFFER_BIT|GL_TEXTURE_BIT|GL_DEPTH_BUFFER_BIT );
@@ -206,8 +206,8 @@ grLfbUnlock( GrLock_t dwType, GrBuffer_t dwBuffer )
 
 //*************************************************
 FX_ENTRY FxBool FX_CALL
-grLfbReadRegion( GrBuffer_t src_buffer, unsigned int src_x, unsigned int src_y, unsigned int src_width,
-                 unsigned int src_height, unsigned int dst_stride, void *dst_data )
+grLfbReadRegion( GrBuffer_t src_buffer, uint32_t src_x, uint32_t src_y, uint32_t src_width,
+                 uint32_t src_height, uint32_t dst_stride, void *dst_data )
 {
 #ifdef OGL_NOTDONE
     GlideMsg("grLfbReadRegion( %d, %d, %d, %d, %d, %d, --- )\n",
@@ -226,60 +226,60 @@ grLfbReadRegion( GrBuffer_t src_buffer, unsigned int src_x, unsigned int src_y, 
                 FXFALSE,
                 &info ) )
     {
-        unsigned int *srcData;         /* Tracking Source Pointer */
-        unsigned int *dstData;         /* Tracking Destination Pointer */
-        unsigned int *end;             /* Demarks End of each Scanline */
-        unsigned int srcJump;          /* bytes to next scanline */
-        unsigned int dstJump;          /* bytes to next scanline */
-        unsigned int length;           /* bytes to copy in scanline */
-        unsigned int scanline;         /* scanline number */
+        uint32_t *srcData;         /* Tracking Source Pointer */
+        uint32_t *dstData;         /* Tracking Destination Pointer */
+        uint32_t *end;             /* Demarks End of each Scanline */
+        uint32_t srcJump;          /* bytes to next scanline */
+        uint32_t dstJump;          /* bytes to next scanline */
+        uint32_t length;           /* bytes to copy in scanline */
+        uint32_t scanline;         /* scanline number */
         int          aligned;          /* word aligned? */
 
-        dstData = ( unsigned int * ) dst_data;
-        srcData = ( unsigned int * ) ( ((char*)info.lfbPtr)+
+        dstData = ( uint32_t * ) dst_data;
+        srcData = ( uint32_t * ) ( ((int8_t*)info.lfbPtr)+
                                 (src_y*info.strideInBytes) +
                                 (src_x<<1) );
         scanline = src_height;
         length   = src_width * 2;
         dstJump  = dst_stride - length;
         srcJump  = info.strideInBytes - length;
-        aligned  = !((unsigned int)srcData&0x2);
+        aligned  = !((uint32_t)srcData&0x2);
 
         if ( aligned ) {
             while( scanline-- ) {
-                end = (unsigned int*)((char*)srcData + length - 2);
+                end = (uint32_t*)((int8_t*)srcData + length - 2);
 
                 while( srcData < end ) 
                     *dstData++ = *srcData++;
 
                 if ( ((int)length) & 0x2 ) {
-                    (*(unsigned short*)dstData) = (*(unsigned short*)srcData);
-                    dstData = (unsigned int*)(((unsigned short*)dstData) + 1 );
-                    srcData = (unsigned int*)(((unsigned short*)srcData) + 1 );
+                    (*(uint16_t*)dstData) = (*(uint16_t*)srcData);
+                    dstData = (uint32_t*)(((uint16_t*)dstData) + 1 );
+                    srcData = (uint32_t*)(((uint16_t*)srcData) + 1 );
                 }
 
-                dstData = (unsigned int*)(((char*)dstData)+dstJump);
-                srcData = (unsigned int*)(((char*)srcData)+srcJump);
+                dstData = (uint32_t*)(((int8_t*)dstData)+dstJump);
+                srcData = (uint32_t*)(((int8_t*)srcData)+srcJump);
             }
         } else {
             while( scanline-- ) {
-                end = (unsigned int*)((char*)srcData + length - 2);
+                end = (uint32_t*)((int8_t*)srcData + length - 2);
 
-                (*(unsigned short*)dstData) = (*(unsigned short*)srcData);
-                dstData = (unsigned int*)(((unsigned short*)dstData) + 1 );
-                srcData = (unsigned int*)(((unsigned short*)srcData) + 1 );
+                (*(uint16_t*)dstData) = (*(uint16_t*)srcData);
+                dstData = (uint32_t*)(((uint16_t*)dstData) + 1 );
+                srcData = (uint32_t*)(((uint16_t*)srcData) + 1 );
 
                 while( srcData < end )
                     *dstData++ = *srcData++;
 
                 if ( !(((int)length) & 0x2) ) {
-                    (*(unsigned short*)dstData) = (*(unsigned short*)srcData);
-                    dstData = (unsigned int*)(((unsigned short*)dstData) + 1 );
-                    srcData = (unsigned int*)(((unsigned short*)srcData) + 1 );
+                    (*(uint16_t*)dstData) = (*(uint16_t*)srcData);
+                    dstData = (uint32_t*)(((uint16_t*)dstData) + 1 );
+                    srcData = (uint32_t*)(((uint16_t*)srcData) + 1 );
                 }
 
-                dstData = (unsigned int*)(((char*)dstData)+dstJump);
-                srcData = (unsigned int*)(((char*)srcData)+srcJump);
+                dstData = (uint32_t*)(((int8_t*)dstData)+dstJump);
+                srcData = (uint32_t*)(((int8_t*)srcData)+srcJump);
             }
         }
         grLfbUnlock( GR_LFB_READ_ONLY, src_buffer );
@@ -292,8 +292,8 @@ grLfbReadRegion( GrBuffer_t src_buffer, unsigned int src_x, unsigned int src_y, 
 
 //*************************************************
 FX_ENTRY FxBool FX_CALL
-grLfbWriteRegion( GrBuffer_t dst_buffer, unsigned int dst_x, unsigned int dst_y, 
-                  GrLfbSrcFmt_t src_format, unsigned int src_width, unsigned int src_height,
+grLfbWriteRegion( GrBuffer_t dst_buffer, uint32_t dst_x, uint32_t dst_y, 
+                  GrLfbSrcFmt_t src_format, uint32_t src_width, uint32_t src_height,
                   int src_stride, void *src_data )
 {
 #ifdef OGL_NOTDONE
@@ -318,17 +318,17 @@ grLfbWriteRegion( GrBuffer_t dst_buffer, unsigned int dst_x, unsigned int dst_y,
     if ( grLfbLock((GrLock_t)( GR_LFB_WRITE_ONLY | GR_LFB_NOIDLE),
 		dst_buffer, writeMode, GR_ORIGIN_UPPER_LEFT, FXFALSE, &info ) )
     {
-        unsigned int *srcData;         /* Tracking Source Pointer */
-        unsigned int *dstData;         /* Tracking Destination Pointer */
-        unsigned int *end;             /* Demarks End of each Scanline */
+        uint32_t *srcData;         /* Tracking Source Pointer */
+        uint32_t *dstData;         /* Tracking Destination Pointer */
+        uint32_t *end;             /* Demarks End of each Scanline */
         int srcJump;          /* bytes to next scanline */
-        unsigned int dstJump;          /* bytes to next scanline */
-        unsigned int length;           /* bytes to copy in scanline */
-        unsigned int scanline;         /* scanline number */
+        uint32_t dstJump;          /* bytes to next scanline */
+        uint32_t length;           /* bytes to copy in scanline */
+        uint32_t scanline;         /* scanline number */
         int   aligned;          /* word aligned? */
 
-        srcData = ( unsigned int * ) src_data;
-        dstData = ( unsigned int * ) ( ((char*)info.lfbPtr)+
+        srcData = ( uint32_t * ) src_data;
+        dstData = ( uint32_t * ) ( ((int8_t*)info.lfbPtr)+
                                 (dst_y*info.strideInBytes) );
         scanline = src_height;
 
@@ -338,16 +338,16 @@ grLfbWriteRegion( GrBuffer_t dst_buffer, unsigned int dst_x, unsigned int dst_y,
             case GR_LFB_SRC_FMT_555:
             case GR_LFB_SRC_FMT_1555:
             case GR_LFB_SRC_FMT_ZA16:
-                dstData = (unsigned int*)(((unsigned short*)dstData) + dst_x);
+                dstData = (uint32_t*)(((uint16_t*)dstData) + dst_x);
                 length  = src_width * 2;
-                aligned = !((unsigned int)dstData&0x2);
+                aligned = !((uint32_t)dstData&0x2);
                 srcJump = src_stride - length;
                 dstJump = info.strideInBytes - length;
                 if ( aligned )
                 {
                     while( scanline-- )
                     {
-                        end = (unsigned int*)((char*)srcData + length - 2);
+                        end = (uint32_t*)((int8_t*)srcData + length - 2);
                         while( srcData < end )
                         {
                             // TODO: swap on bigendian?
@@ -358,25 +358,25 @@ grLfbWriteRegion( GrBuffer_t dst_buffer, unsigned int dst_x, unsigned int dst_y,
 
                         if ( ((int)length) & 0x2 )
                         {
-                            (*(unsigned short*)&(dstData[0])) = (*(unsigned short*)&(srcData[0]));
+                            (*(uint16_t*)&(dstData[0])) = (*(uint16_t*)&(srcData[0]));
 
-                            dstData = (unsigned int*)(((unsigned short*)dstData) + 1 );
-                            srcData = (unsigned int*)(((unsigned short*)srcData) + 1 );
+                            dstData = (uint32_t*)(((uint16_t*)dstData) + 1 );
+                            srcData = (uint32_t*)(((uint16_t*)srcData) + 1 );
                         }
 
-                        dstData = (unsigned int*)(((char*)dstData)+dstJump);
-                        srcData = (unsigned int*)(((char*)srcData)+srcJump);
+                        dstData = (uint32_t*)(((int8_t*)dstData)+dstJump);
+                        srcData = (uint32_t*)(((int8_t*)srcData)+srcJump);
                     }
                 }
                 else
                 {
                     while( scanline-- ) {
-                        end = (unsigned int*)((char*)srcData + length - 2);
+                        end = (uint32_t*)((int8_t*)srcData + length - 2);
 
                         // TODO: swap on bigendian?
-                        (*(unsigned short*)&(dstData[0])) = (*(unsigned short*)&(srcData[0]));
-                        dstData = (unsigned int*)(((unsigned short*)dstData) + 1 );
-                        srcData = (unsigned int*)(((unsigned short*)srcData) + 1 );
+                        (*(uint16_t*)&(dstData[0])) = (*(uint16_t*)&(srcData[0]));
+                        dstData = (uint32_t*)(((uint16_t*)dstData) + 1 );
+                        srcData = (uint32_t*)(((uint16_t*)srcData) + 1 );
 
                         while( srcData < end ) {
                             // TODO: swap on bigendian?
@@ -388,13 +388,13 @@ grLfbWriteRegion( GrBuffer_t dst_buffer, unsigned int dst_x, unsigned int dst_y,
                         if ( !(length & 0x2) )
                         {
                             // TODO: swap on bigendian?
-                            (*(unsigned short*)&(dstData[0])) = (*(unsigned short*)&(srcData[0]));
-                            dstData = (unsigned int*)(((unsigned short*)dstData) + 1 );
-                            srcData = (unsigned int*)(((unsigned short*)srcData) + 1 );
+                            (*(uint16_t*)&(dstData[0])) = (*(uint16_t*)&(srcData[0]));
+                            dstData = (uint32_t*)(((uint16_t*)dstData) + 1 );
+                            srcData = (uint32_t*)(((uint16_t*)srcData) + 1 );
                         }
 
-                        dstData = (unsigned int*)(((char*)dstData)+dstJump);
-                        srcData = (unsigned int*)(((char*)srcData)+srcJump);
+                        dstData = (uint32_t*)(((int8_t*)dstData)+dstJump);
+                        srcData = (uint32_t*)(((int8_t*)srcData)+srcJump);
                     }
                 }
                 break;
@@ -404,21 +404,21 @@ grLfbWriteRegion( GrBuffer_t dst_buffer, unsigned int dst_x, unsigned int dst_y,
                 case GR_LFB_SRC_FMT_565_DEPTH:
                 case GR_LFB_SRC_FMT_555_DEPTH:
                 case GR_LFB_SRC_FMT_1555_DEPTH:
-                    dstData = ((unsigned int*)dstData) + dst_x;
+                    dstData = ((uint32_t*)dstData) + dst_x;
                     length  = src_width * 4;
                     srcJump = src_stride - length;
                     dstJump = info.strideInBytes - length;
 
                     while( scanline-- ) {
-                        end = (unsigned int*)((char*)srcData + length);
+                        end = (uint32_t*)((int8_t*)srcData + length);
                         while( srcData < end ) {
                             // TODO: swap on bigendian?
                             *dstData = *srcData;
                             dstData++;
                             srcData++;
                         }
-                        dstData = (unsigned int*)(((char*)dstData)+dstJump);
-                        srcData = (unsigned int*)(((char*)srcData)+srcJump);
+                        dstData = (uint32_t*)(((int8_t*)dstData)+dstJump);
+                        srcData = (uint32_t*)(((int8_t*)srcData)+srcJump);
                     }
                 break;
                 case GR_LFB_SRC_FMT_RLE16:
@@ -446,7 +446,7 @@ grLfbConstantAlpha( GrAlpha_t alpha )
 }
 
 FX_ENTRY void FX_CALL 
-grLfbConstantDepth( unsigned short depth )
+grLfbConstantDepth( uint16_t depth )
 {
 #ifdef OGL_CRITICAL
     GlideMsg("grLfbConstantDepth( %u )\n", depth );

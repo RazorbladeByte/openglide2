@@ -131,7 +131,7 @@ grDepthBufferFunction( GrCmpFnc_t func )
 //* Set the depth bias level
 //*************************************************
 FX_ENTRY void FX_CALL
-grDepthBiasLevel( short level )
+grDepthBiasLevel( int16_t level )
 {
 #ifdef OGL_PARTDONE
     GlideMsg( "grDepthBiasLevel( %d )\n", level );

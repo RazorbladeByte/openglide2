@@ -12,13 +12,13 @@
 // Construction/Destruction
 //////////////////////////////////////////////////////////////////////
 
-TexDB::TexDB( unsigned int MemorySize )
+TexDB::TexDB( uint32_t MemorySize )
 {
     numberOfTexSections = MemorySize >> 15; // ( 32 * 1024 );
 
     m_first = new Record*[ numberOfTexSections ];
 
-    for ( unsigned int i = 0; i < numberOfTexSections; i++ )
+    for ( uint32_t i = 0; i < numberOfTexSections; i++ )
     {
         m_first[ i ] = NULL;
     }
@@ -28,7 +28,7 @@ TexDB::~TexDB( void )
 {
     Record * r;
 
-    for ( unsigned int i = 0; i < numberOfTexSections; i++ )
+    for ( uint32_t i = 0; i < numberOfTexSections; i++ )
     {
         r = m_first[ i ];
         
@@ -42,11 +42,11 @@ TexDB::~TexDB( void )
     delete[] m_first;
 }
 
-GrTexInfo * TexDB::Find( unsigned int startAddress, GrTexInfo *info, unsigned int hash, 
+GrTexInfo * TexDB::Find( uint32_t startAddress, GrTexInfo *info, uint32_t hash, 
                          GLuint *pTexNum, GLuint *pTex2Num, bool *pal_change )
 {
     Record         * r;
-    unsigned int   sect = startAddress >> 15; // ( 32 * 1024 );
+    uint32_t   sect = startAddress >> 15; // ( 32 * 1024 );
 
     for ( r = m_first[ sect ]; r != NULL; r = r->next )
     {
@@ -79,11 +79,11 @@ GrTexInfo * TexDB::Find( unsigned int startAddress, GrTexInfo *info, unsigned in
     return NULL;
 }
 
-void TexDB::WipeRange(unsigned int startAddress, unsigned int endAddress, unsigned int hash)
+void TexDB::WipeRange(uint32_t startAddress, uint32_t endAddress, uint32_t hash)
 {
     Record         ** p;
-    unsigned int   stt_sect;
-    unsigned int   end_sect;
+    uint32_t   stt_sect;
+    uint32_t   end_sect;
 
     stt_sect = startAddress >> 15; // ( 32 * 1024 );
 
@@ -108,7 +108,7 @@ void TexDB::WipeRange(unsigned int startAddress, unsigned int endAddress, unsign
         end_sect = numberOfTexSections - 1;
     }
 
-    for ( unsigned int i = stt_sect; i <= end_sect; i++ )
+    for ( uint32_t i = stt_sect; i <= end_sect; i++ )
     {
         p = &( m_first[ i ] );
         while ( *p != NULL )
@@ -133,11 +133,11 @@ void TexDB::WipeRange(unsigned int startAddress, unsigned int endAddress, unsign
     }
 }
 
-void TexDB::Add( unsigned int startAddress, unsigned int endAddress, GrTexInfo *info, 
-	             unsigned int hash, GLuint *pTexNum, GLuint *pTex2Num )
+void TexDB::Add( uint32_t startAddress, uint32_t endAddress, GrTexInfo *info, 
+	             uint32_t hash, GLuint *pTexNum, GLuint *pTex2Num )
 {
-    Record         *r = new Record( pTex2Num != NULL );
-    unsigned int   sect;
+    Record     *r = new Record( pTex2Num != NULL );
+    uint32_t   sect;
 
     sect = startAddress >> 15; // 32 * 1024
 
@@ -166,7 +166,7 @@ void TexDB::Clear( void )
 {
     Record  * r;
 
-    for ( unsigned int i = 0; i < numberOfTexSections; i++ )
+    for ( uint32_t i = 0; i < numberOfTexSections; i++ )
     {
         r = m_first[ i ];
         
@@ -207,7 +207,7 @@ TexDB::Record::~Record( void )
    }
 }
 
-bool TexDB::Record::Match( unsigned int stt, GrTexInfo *inf, unsigned int h )
+bool TexDB::Record::Match( uint32_t stt, GrTexInfo *inf, uint32_t h )
 {
    return ( ( startAddress == stt ) && 
             ( inf->largeLod == info.largeLod ) && 

@@ -25,13 +25,13 @@
     }
 
 
-void genPaletteMipmaps( unsigned int width, unsigned int height, unsigned char *data )
+void genPaletteMipmaps( uint32_t width, uint32_t height, uint8_t *data )
 {
-    unsigned char  buf[ 128 * 128 ];
-    unsigned int   mmwidth;
-    unsigned int   mmheight;
-    unsigned int   lod;
-    unsigned int   skip;
+    uint8_t  buf[ 128 * 128 ];
+    uint32_t   mmwidth;
+    uint32_t   mmheight;
+    uint32_t   lod;
+    uint32_t   skip;
 
     mmwidth = width;
     mmheight = height;
@@ -40,7 +40,7 @@ void genPaletteMipmaps( unsigned int width, unsigned int height, unsigned char *
 
     while ( ( mmwidth > 1 ) || ( mmheight > 1 ) )
     {
-        unsigned int   x, 
+        uint32_t   x, 
                        y;
 
         mmwidth = mmwidth > 1 ? mmwidth / 2 : 1;
@@ -50,7 +50,7 @@ void genPaletteMipmaps( unsigned int width, unsigned int height, unsigned char *
 
         for ( y = 0; y < mmheight; y++ )
         {
-            unsigned char   * in, 
+            uint8_t   * in, 
                             * out;
 
             in = data + width * y * skip;
@@ -72,7 +72,7 @@ PGTexture::PGTexture( int mem_size )
     m_valid = false;
     m_chromakey_mode = GR_CHROMAKEY_DISABLE;
     m_tex_memory_size = mem_size;
-    m_memory = new unsigned char[ mem_size ];
+    m_memory = new uint8_t[ mem_size ];
     m_ncc_select = GR_NCCTABLE_NCC0;
 
 #ifdef OGL_DEBUG
@@ -99,12 +99,12 @@ PGTexture::~PGTexture( void )
     delete m_db;
 }
 
-void PGTexture::DownloadMipMap( unsigned int startAddress, unsigned int evenOdd, GrTexInfo *info )
+void PGTexture::DownloadMipMap( uint32_t startAddress, uint32_t evenOdd, GrTexInfo *info )
 {
-    unsigned int mip_size = MipMapMemRequired( info->smallLod, 
+    uint32_t mip_size = MipMapMemRequired( info->smallLod, 
                                                info->aspectRatio, 
                                                info->format );
-    unsigned int mip_offset = startAddress + TextureMemRequired( evenOdd, info );
+    uint32_t mip_offset = startAddress + TextureMemRequired( evenOdd, info );
     
     if ( info->format == GR_TEXFMT_BGRA_8888 )
     {
@@ -172,7 +172,7 @@ void PGTexture::DownloadMipMap( unsigned int startAddress, unsigned int evenOdd,
 #endif
 }
 
-void PGTexture::Source( unsigned int startAddress, unsigned int evenOdd, GrTexInfo *info )
+void PGTexture::Source( uint32_t startAddress, uint32_t evenOdd, GrTexInfo *info )
 {
     m_startAddress = startAddress;
     m_evenOdd = evenOdd;
@@ -184,7 +184,7 @@ void PGTexture::Source( unsigned int startAddress, unsigned int evenOdd, GrTexIn
     m_valid = ( ( startAddress + TextureMemRequired( evenOdd, info ) ) <= m_tex_memory_size );
 }
 
-void PGTexture::DownloadTable( GrTexTable_t type, unsigned int *data, int first, int count )
+void PGTexture::DownloadTable( GrTexTable_t type, uint32_t *data, int first, int count )
 {
     if ( type == GR_TEXTABLE_PALETTE )
     {
@@ -224,13 +224,13 @@ void PGTexture::DownloadTable( GrTexTable_t type, unsigned int *data, int first,
 
 bool PGTexture::MakeReady( void )
 {
-    unsigned char * data;
+    uint8_t * data;
     TexValues     texVals;
     GLuint        texNum;
     GLuint        tex2Num;
-    unsigned int  size;
-    unsigned int  test_hash;
-    unsigned int  wipe_hash;
+    uint32_t  size;
+    uint32_t  test_hash;
+    uint32_t  wipe_hash;
     bool          palette_changed;
     bool          * pal_change_ptr;
     bool          use_mipmap_ext;
@@ -362,7 +362,7 @@ bool PGTexture::MakeReady( void )
         case GR_TEXFMT_RGB_565:
             if ( m_chromakey_mode )
             {
-                Convert565Kto8888( (unsigned short*)data, m_chromakey_value_565, m_tex_temp, texVals.nPixels );
+                Convert565Kto8888( (uint16_t*)data, m_chromakey_value_565, m_tex_temp, texVals.nPixels );
 				OGL_LOAD_CREATE_TEXTURE( 4, GL_RGBA, GL_UNSIGNED_BYTE, m_tex_temp );
             }
             else if ( InternalConfig.OGLVersion > OGL_VER_1_1 )
@@ -373,12 +373,12 @@ bool PGTexture::MakeReady( void )
             {
                 if ( InternalConfig.Wrap565to5551 )
                 {
-                    Convert565to5551( (unsigned int*)data, m_tex_temp, texVals.nPixels );
+                    Convert565to5551( (uint32_t*)data, m_tex_temp, texVals.nPixels );
                     OGL_LOAD_CREATE_TEXTURE( 4, GL_RGBA, GL_UNSIGNED_SHORT_5_5_5_1_EXT, m_tex_temp );
                 }
                 else
                 {
-                    Convert565to8888( (unsigned short*)data, m_tex_temp, texVals.nPixels );
+                    Convert565to8888( (uint16_t*)data, m_tex_temp, texVals.nPixels );
                     OGL_LOAD_CREATE_TEXTURE( 4, GL_RGBA, GL_UNSIGNED_BYTE, m_tex_temp );
                 }
             }
@@ -391,7 +391,7 @@ bool PGTexture::MakeReady( void )
             }
             else
             {
-                Convert4444to4444special( (unsigned int*)data, m_tex_temp, texVals.nPixels );
+                Convert4444to4444special( (uint32_t*)data, m_tex_temp, texVals.nPixels );
                 OGL_LOAD_CREATE_TEXTURE( 4, GL_RGBA, GL_UNSIGNED_SHORT_4_4_4_4_EXT, m_tex_temp );
             }
             break;
@@ -403,7 +403,7 @@ bool PGTexture::MakeReady( void )
             }
             else
             {
-                Convert1555to5551( (unsigned int*)data, m_tex_temp, texVals.nPixels );
+                Convert1555to5551( (uint32_t*)data, m_tex_temp, texVals.nPixels );
                 OGL_LOAD_CREATE_TEXTURE( 4, GL_RGBA, GL_UNSIGNED_SHORT_5_5_5_1_EXT, m_tex_temp );
             }
             break;
@@ -431,18 +431,18 @@ bool PGTexture::MakeReady( void )
         case GR_TEXFMT_AP_88:
             if ( use_two_textures )
             {
-                unsigned int *tex_temp2 = m_tex_temp + 256 * 128;
+                uint32_t *tex_temp2 = m_tex_temp + 256 * 128;
 
                 p_glColorTableEXT( GL_TEXTURE_2D, GL_RGBA, 256, GL_BGRA_EXT, GL_UNSIGNED_BYTE, m_palette );
 
-                SplitAP88( (unsigned short *)data, (unsigned char *)m_tex_temp, (unsigned char *)tex_temp2, texVals.nPixels );
+                SplitAP88( (uint16_t *)data, (uint8_t *)m_tex_temp, (uint8_t *)tex_temp2, texVals.nPixels );
                 
                 glTexImage2D( GL_TEXTURE_2D, texVals.lod, GL_COLOR_INDEX8_EXT, 
                               texVals.width, texVals.height, 0, 
                               GL_COLOR_INDEX, GL_UNSIGNED_BYTE, m_tex_temp );
                 if ( InternalConfig.EnableMipMaps )
                 {
-                    genPaletteMipmaps( texVals.width, texVals.height, (unsigned char *)m_tex_temp );
+                    genPaletteMipmaps( texVals.width, texVals.height, (uint8_t *)m_tex_temp );
                 }
 
                 p_glActiveTextureARB( GL_TEXTURE1_ARB );
@@ -453,13 +453,13 @@ bool PGTexture::MakeReady( void )
             }
             else
             {
-                ConvertAP88to8888( (unsigned short*)data, m_tex_temp, texVals.nPixels, m_palette );
+                ConvertAP88to8888( (uint16_t*)data, m_tex_temp, texVals.nPixels, m_palette );
                 OGL_LOAD_CREATE_TEXTURE( 4, GL_BGRA_EXT, GL_UNSIGNED_BYTE, m_tex_temp );
             }
             break;
             
         case GR_TEXFMT_ALPHA_8:
-            ConvertA8toAP88( (unsigned char*)data, (unsigned short*)m_tex_temp, texVals.nPixels );
+            ConvertA8toAP88( (uint8_t*)data, (uint16_t*)m_tex_temp, texVals.nPixels );
             OGL_LOAD_CREATE_TEXTURE( 2, GL_LUMINANCE_ALPHA, GL_UNSIGNED_BYTE, m_tex_temp );
             break;
             
@@ -475,7 +475,7 @@ bool PGTexture::MakeReady( void )
 #if 0
             OGL_LOAD_CREATE_TEXTURE( GL_LUMINANCE4_ALPHA4, GL_LUMINANCE_ALPHA, GL_UNSIGNED_BYTE, data );
 #else
-            ConvertAI44toAP88( (unsigned char*)data, (unsigned short*)m_tex_temp, texVals.nPixels );
+            ConvertAI44toAP88( (uint8_t*)data, (uint16_t*)m_tex_temp, texVals.nPixels );
             glTexImage2D( GL_TEXTURE_2D, texVals.lod, 2, texVals.width, texVals.height, 0, GL_LUMINANCE_ALPHA, GL_UNSIGNED_BYTE, m_tex_temp );
             if ( InternalConfig.BuildMipMaps )
             {
@@ -489,17 +489,17 @@ bool PGTexture::MakeReady( void )
             break;
             
         case GR_TEXFMT_16BIT: //GR_TEXFMT_ARGB_8332:
-            Convert8332to8888( (unsigned short*)data, m_tex_temp, texVals.nPixels );
+            Convert8332to8888( (uint16_t*)data, m_tex_temp, texVals.nPixels );
             OGL_LOAD_CREATE_TEXTURE( 4, GL_RGBA, GL_UNSIGNED_BYTE, m_tex_temp );
             break;
             
         case GR_TEXFMT_YIQ_422:
-            ConvertYIQto8888( (unsigned char*)data, m_tex_temp, texVals.nPixels, &(m_ncc[m_ncc_select]) );
+            ConvertYIQto8888( (uint8_t*)data, m_tex_temp, texVals.nPixels, &(m_ncc[m_ncc_select]) );
             OGL_LOAD_CREATE_TEXTURE( 4, GL_RGBA, GL_UNSIGNED_BYTE, m_tex_temp );
             break;
             
         case GR_TEXFMT_AYIQ_8422:
-            ConvertAYIQto8888( (unsigned short*)data, m_tex_temp, texVals.nPixels, &(m_ncc[m_ncc_select]) );
+            ConvertAYIQto8888( (uint16_t*)data, m_tex_temp, texVals.nPixels, &(m_ncc[m_ncc_select]) );
             OGL_LOAD_CREATE_TEXTURE( 4, GL_RGBA, GL_UNSIGNED_BYTE, m_tex_temp );
             break;
             
@@ -535,9 +535,9 @@ bool PGTexture::MakeReady( void )
     return use_two_textures;
 }
 
-unsigned int PGTexture::LodOffset( unsigned int evenOdd, GrTexInfo *info )
+uint32_t PGTexture::LodOffset( uint32_t evenOdd, GrTexInfo *info )
 {
-    unsigned int   total = 0;
+    uint32_t   total = 0;
     GrLOD_t        i;
 
     for( i = info->largeLod; i < info->smallLod; i++ )
@@ -550,7 +550,7 @@ unsigned int PGTexture::LodOffset( unsigned int evenOdd, GrTexInfo *info )
     return total;
 }
 
-unsigned int PGTexture::TextureMemRequired( unsigned int evenOdd, GrTexInfo *info )
+uint32_t PGTexture::TextureMemRequired( uint32_t evenOdd, GrTexInfo *info )
 {
     //
     // If the format is one of these:
@@ -567,7 +567,7 @@ unsigned int PGTexture::TextureMemRequired( unsigned int evenOdd, GrTexInfo *inf
     return nSquareTexLod[ info->format <= GR_TEXFMT_RSVD1 ][ info->aspectRatio ][ info->largeLod ][ info->smallLod ];
 }
 
-unsigned int PGTexture::MipMapMemRequired( GrLOD_t lod, GrAspectRatio_t aspectRatio, GrTextureFormat_t format )
+uint32_t PGTexture::MipMapMemRequired( GrLOD_t lod, GrAspectRatio_t aspectRatio, GrTextureFormat_t format )
 {
     //
     // If the format is one of these:
@@ -606,7 +606,7 @@ void PGTexture::GetAspect( float *hAspect, float *wAspect )
 void PGTexture::ChromakeyValue( GrColor_t value )
 {
     m_chromakey_value_8888 = value & 0x00ffffff;
-    m_chromakey_value_565  = (unsigned short)( ( value & 0x00F80000 ) >> 8 |
+    m_chromakey_value_565  = (uint16_t)( ( value & 0x00F80000 ) >> 8 |
                                                ( value & 0x0000FC00 ) >> 5 |
                                                ( value & 0x000000F8 ) >> 3 );
     m_palette_dirty = true;
@@ -620,7 +620,7 @@ void PGTexture::ChromakeyMode( GrChromakeyMode_t mode )
 
 void PGTexture::ApplyKeyToPalette( void )
 {
-    unsigned int   hash;
+    uint32_t   hash;
     int            i;
     
     if ( m_palette_dirty )
@@ -659,7 +659,7 @@ void PGTexture::NCCTable( GrNCCTable_t tab )
     }
 }
 
-unsigned int PGTexture::GetMemorySize( void )
+uint32_t PGTexture::GetMemorySize( void )
 {
     return m_tex_memory_size;
 }

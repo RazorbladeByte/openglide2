@@ -41,9 +41,9 @@ PGUTexture       UTextures;
 
 #ifdef OGL_DEBUG
     // Profiling variables
-    long long       InitialTick;
-    long long       FinalTick;
-    unsigned int    Frame;
+    int64_t       InitialTick;
+    int64_t       FinalTick;
+    uint32_t    Frame;
     double          Fps;
     double          FpsAux;
 #endif
@@ -66,7 +66,7 @@ void InitMainVariables( void )
     GetOptions( );
 }
 
-bool InitWindow( unsigned int hWnd )
+bool InitWindow( uint32_t hWnd )
 {
     if ( !InitialiseOpenGLWindow( hWnd, 0, 0,  OpenGL.WindowWidth, OpenGL.WindowHeight ) ) {
         Error( "Failed to Initialise OpenGL Window!\n" );
