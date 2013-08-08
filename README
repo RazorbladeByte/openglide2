@@ -8,5 +8,5 @@ Compiler: msvc10
 
 Notes:
  1. mingw will require -mmmx and --add-underscore to build successfully.
- 2. support for all non-windows platforms have been dropped dos may or may come back later on.
+ 2. support for all non-windows platforms have been dropped dos may or may not come back later on.
 
