@@ -228,7 +228,7 @@ typedef int GrFogMode_t;
 #define GR_FOG_MULT2               0x100
 #define GR_FOG_ADD2                0x200
 
-typedef int GrLock_t;
+typedef unsigned int GrLock_t;
 #define GR_LFB_READ_ONLY  0x00
 #define GR_LFB_WRITE_ONLY 0x01
 #define GR_LFB_IDLE       0x00
