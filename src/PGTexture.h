@@ -34,6 +34,8 @@ public:
     void DownloadTable( GrTexTable_t type, uint32_t *data, int first, int count );
     void Source( uint32_t startAddress, uint32_t evenOdd, GrTexInfo *info );
     void DownloadMipMap( uint32_t startAddress, uint32_t evenOdd, GrTexInfo *info );
+	//Glidos approach to above func
+	void DownloadMipMapPartial( uint32_t startAddress, uint32_t evenOdd, GrTexInfo *info, int start, int end );
     uint32_t GetMemorySize( void );
 
     PGTexture( int mem_size );

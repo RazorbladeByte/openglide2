@@ -172,6 +172,32 @@ void PGTexture::DownloadMipMap( uint32_t startAddress, uint32_t evenOdd, GrTexIn
 #endif
 }
 
+void PGTexture::DownloadMipMapPartial( uint32_t startAddress, uint32_t evenOdd, GrTexInfo *info, int start, int end )
+{
+    // Glidos has different handling of grTexDownload, so keep it
+    if ( info->format == GR_TEXFMT_BGRA_8888 )
+    {
+        DownloadMipMap( startAddress, evenOdd, info );
+        return;
+    }
+
+    uint32_t mip_size = MipMapMemRequired( info->smallLod, 
+                                        info->aspectRatio, 
+                                        info->format );
+    uint32_t mip_offset = startAddress + TextureMemRequired( evenOdd, info );
+
+    if ( mip_offset <= m_tex_memory_size )
+    {
+        int stride = texInfo[ info->aspectRatio ][ info->smallLod ].width;
+        if (info->format >= GR_TEXFMT_16BIT)
+            stride *= 2;
+        unsigned char *mip_memory = m_memory + mip_offset - mip_size;
+        memcpy( mip_memory + start * stride, info->data, (end - start + 1) * stride );
+
+        m_db->WipeRange( startAddress, mip_offset, 0 );
+    }
+}
+
 void PGTexture::Source( uint32_t startAddress, uint32_t evenOdd, GrTexInfo *info )
 {
     m_startAddress = startAddress;

@@ -160,8 +160,18 @@ grTexDownloadMipMapLevelPartial( GrChipID_t        tmu,
         return;
     }
 
-    grTexDownloadMipMapLevel( tmu, startAddress, thisLod, largeLod, aspectRatio, format,
-        evenOdd, data );
+//    grTexDownloadMipMapLevel( tmu, startAddress, thisLod, largeLod, aspectRatio, format,
+//        evenOdd, data );
+//
+//fix by using glidos version
+    GrTexInfo info;
+    info.smallLod    = thisLod;
+    info.largeLod    = largeLod;
+    info.aspectRatio = aspectRatio;
+    info.format      = format;
+    info.data        = data;
+
+    Textures->DownloadMipMapPartial( startAddress, evenOdd, &info, start, end );
 }
 
 //*************************************************
