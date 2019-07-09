@@ -109,6 +109,9 @@ bool InitWindow( uint32_t hWnd )
 //*************************************************
 void InitOpenGL( void )
 {
+	//Workaround, some game like Tomb Raider trigger flat shading
+	glShadeModel( GL_SMOOTH );
+	
     OpenGL.ZNear = ZBUFFERNEAR;
     OpenGL.ZFar = ZBUFFERFAR;
 
