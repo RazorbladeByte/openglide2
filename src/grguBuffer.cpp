@@ -91,6 +91,13 @@ grBufferSwap( int swap_interval )
     OGLRender.FrameTriangles = 0;
 #endif
 
+    // Carmageddon never unlocks the buffer before calling BufferSwap
+    if ( Glide.DstBuffer.Lock )
+    {
+        grLfbUnlock ( Glide.DstBuffer.Type, Glide.DstBuffer.Buffer );
+        Glide.DstBuffer.Lock = true;    // Re-lock the buffer
+    }
+
     SwapBuffers( );
 
 #ifdef OGL_DEBUG
