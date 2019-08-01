@@ -1,12 +1,13 @@
                           openglide2 - a glide2-to-OpenGL wrapper
                             based on OpenGLide by Fabio Barros 
 
-Version:  0.2			
+Version:  0.3			
 Platform: win32
-Compiler: msvc10
-          mingw
+Compiler: Visual Studio 2019
+          
 
 Notes:
- 1. mingw will require -mmmx and --add-underscore to build successfully.
- 2. support for all non-windows platforms have been dropped dos may or may not come back later on.
+ 1. MinGW should compile successfuly but you may need to underscores to exported functions.
+ 3. Requires Windows SDK 10, though any should work fine.
+ 2. Support for all non-windows platforms have been dropped dos may or may not come back later on.
 
